@@ -1,0 +1,73 @@
+{
+    "n_clusters": 4,
+    "cluster_evaluations": {
+        "3": {
+            "silhouette_score": 0.1508,
+            "davies_bouldin_index": 1.6941,
+            "calinski_harabasz_score": 551.51
+        },
+        "4": {
+            "silhouette_score": 0.1608,
+            "davies_bouldin_index": 1.6461,
+            "calinski_harabasz_score": 511.54
+        },
+        "5": {
+            "silhouette_score": 0.1738,
+            "davies_bouldin_index": 1.6658,
+            "calinski_harabasz_score": 497.77
+        },
+        "6": {
+            "silhouette_score": 0.1728,
+            "davies_bouldin_index": 1.5868,
+            "calinski_harabasz_score": 469.59
+        }
+    },
+    "cluster_centers": {
+        "0": {
+            "Age": 50.290277777777774,
+            "Contact_Frequency_Score": 0.08414972222222222,
+            "Digital_Adoption_Score": 0.4161875,
+            "Repeat_Contact_Rate": 0.781085,
+            "Avg_Service_Friction": 0.4808408536706349,
+            "Avg_Resolution_Complexity": 0.5147728214285714,
+            "Member_Escalation_Rate": 0.35766699735449736
+        },
+        "1": {
+            "Age": 40.070460704607044,
+            "Contact_Frequency_Score": 0.09027384823848239,
+            "Digital_Adoption_Score": 0.8137428184281843,
+            "Repeat_Contact_Rate": 0.29121761517615175,
+            "Avg_Service_Friction": 0.23947182066503203,
+            "Avg_Resolution_Complexity": 0.373577432034241,
+            "Member_Escalation_Rate": 0.0659859336688605
+        },
+        "2": {
+            "Age": 48.03409090909091,
+            "Contact_Frequency_Score": 0.30773276515151515,
+            "Digital_Adoption_Score": 0.4947685606060606,
+            "Repeat_Contact_Rate": 0.46011193181818183,
+            "Avg_Service_Friction": 0.32494915648081985,
+            "Avg_Resolution_Complexity": 0.42869629263113324,
+            "Member_Escalation_Rate": 0.17224091610461992
+        },
+        "3": {
+            "Age": 57.110236220472444,
+            "Contact_Frequency_Score": 0.0868335433070866,
+            "Digital_Adoption_Score": 0.18370771653543305,
+            "Repeat_Contact_Rate": 0.17647716535433072,
+            "Avg_Service_Friction": 0.21174862860892388,
+            "Avg_Resolution_Complexity": 0.37660744994375706,
+            "Member_Escalation_Rate": 0.09533558305211849
+        }
+    },
+    "persona_mapping": {
+        "0": "Escalation-Prone / High-Friction",
+        "1": "Digital-First Self-Service",
+        "2": "Service-Intensive / High-Touch",
+        "3": "Routine Low-Need Care Seekers"
+    },
+    "pca_explained_variance_ratio": [
+        0.3148,
+        0.1875
+    ]
+}

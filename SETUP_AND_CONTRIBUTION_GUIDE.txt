@@ -1,0 +1,227 @@
+================================================================================
+KAISER PERMANENTE MEMBER EXPERIENCE INTELLIGENCE PLATFORM
+COMPLETE OFFICE LAPTOP SETUP, DEPLOYMENT & TEAM CONTRIBUTION GUIDE
+================================================================================
+Document Type: Production Setup & Engineering Runbook
+Target Audience: Team Engineers, Data Scientists, Analytics Developers, Office Laptops
+System Compatibility: Windows 10/11, macOS Sonoma/Sequoia, Ubuntu 22.04+ LTS
+Version: 2.0.0 Production Release
+================================================================================
+
+--------------------------------------------------------------------------------
+1. 5-MINUTE QUICK-START CHEAT SHEET
+--------------------------------------------------------------------------------
+If you already have Python 3.10+ installed on your office laptop, open PowerShell
+or Terminal in the project root folder and execute:
+
+# 1. Create and activate virtual environment
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+
+# 2. Install all required production dependencies
+pip install -r requirements.txt
+
+# 3. Create .env configuration file (copy template)
+Copy-Item .env.example .env
+
+# 4. Run the full data science pipeline + auto-sync to Neon Cloud Database
+python run_pipeline.py
+
+# 5. Launch the Executive Web Portal & Care Navigation Assistant
+python -m streamlit run app.py
+
+Your application will automatically open in your browser at:
+http://localhost:8501
+
+
+--------------------------------------------------------------------------------
+2. SYSTEM PREREQUISITES & INSTALLATION
+--------------------------------------------------------------------------------
+A. PYTHON (Version 3.10 to 3.13)
+   - Check if installed:
+     python --version
+   - If not installed: Download from https://www.python.org/downloads/
+   - CRITICAL WINDOWS STEP: During installation, check the box:
+     [X] Add python.exe to PATH
+
+B. GIT (Version Control)
+   - Check if installed:
+     git --version
+   - If not installed: Download from https://git-scm.com/
+
+C. CODE EDITORS
+   - Visual Studio Code or Google Antigravity IDE
+   - Recommended VS Code Extensions: Python (Microsoft), Pylance (Microsoft)
+
+D. POWER BI DESKTOP
+   - Download from Microsoft Store or https://powerbi.microsoft.com/desktop/
+
+
+--------------------------------------------------------------------------------
+3. PYTHON VIRTUAL ENVIRONMENT CONFIGURATION
+--------------------------------------------------------------------------------
+Windows PowerShell / Command Prompt:
+1. Open PowerShell and navigate to the project directory:
+   cd C:\path\to\Capstone
+
+2. Create virtual environment named 'venv':
+   python -m venv venv
+
+3. Activate virtual environment:
+   - PowerShell:
+     .\venv\Scripts\Activate.ps1
+
+     * If you see 'execution of scripts is disabled on this system', run:
+       Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+       .\venv\Scripts\Activate.ps1
+
+   - Command Prompt (cmd.exe):
+     venv\Scripts\activate.bat
+
+macOS / Linux:
+   python3 -m venv venv
+   source venv/bin/activate
+
+(When activated, '(venv)' will appear at the start of your terminal prompt)
+
+
+--------------------------------------------------------------------------------
+4. PRODUCTION DEPENDENCIES INSTALLATION
+--------------------------------------------------------------------------------
+With (venv) activated, upgrade pip and install all required packages:
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+Verification Script:
+Verify your environment is 100% operational by executing:
+
+python -c "
+import streamlit, torch, sqlalchemy, psycopg2, rank_bm25, sklearn, pandas, numpy
+print('==============================================')
+print('>>> ALL DEPENDENCIES VERIFIED SUCCESSFULLY <<<')
+print('==============================================')
+"
+
+
+--------------------------------------------------------------------------------
+5. ENVIRONMENT VARIABLES & DATABASE CONFIGURATION (.env)
+--------------------------------------------------------------------------------
+The platform supports Dual Database Persistence:
+1. Local SQLite (data/kaiser_analytics.db): Requires zero credentials or internet.
+2. Neon Cloud PostgreSQL: Remote serverless cloud database for multi-user access
+   and Power BI DirectQuery.
+
+Setting Up .env:
+1. Copy .env.example to .env:
+   - Windows PowerShell: Copy-Item .env.example .env
+   - macOS / Linux:      cp .env.example .env
+
+2. Ensure .env contains the active Neon Cloud PostgreSQL credentials:
+DATABASE_URL="postgresql+psycopg2://neondb_owner:npg_YrA5gGhDfpn8@ep-rough-wave-b4tlujf7-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL_UNPOOLED="postgresql+psycopg2://neondb_owner:npg_YrA5gGhDfpn8@ep-rough-wave-b4tlujf7.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
+NEON_BRANCH=production
+
+
+--------------------------------------------------------------------------------
+6. END-TO-END EXECUTION GUIDE
+--------------------------------------------------------------------------------
+COMMAND A: RUN FULL DATA & ML PIPELINE + CLOUD DB SYNC
+Execute:
+python run_pipeline.py
+
+What it does:
+- Validates 100% referential integrity across the 5 raw source CSVs
+- Runs statistical hypothesis testing (Welch's t-test, Spearman, Wilson CIs)
+- Trains Balanced Logistic Regression escalation model (AUC: 0.795, Recall: 66%)
+- Trains K-Means (k=4) member behavioral persona clustering
+- Trains PyTorch 1D-CNN continuous sentiment classifier
+- Executes LDA topic modeling extracting the 5 Kaiser complaint themes
+- Assembles Star Schema (Dim_Member, Dim_Agent, Dim_Date, Fact_Interactions)
+- Synchronizes Star Schema to SQLite and Neon Cloud PostgreSQL in ~2 minutes
+
+COMMAND B: LAUNCH INTERACTIVE EXECUTIVE WEB PORTAL
+Execute:
+python -m streamlit run app.py
+
+Access in browser at: http://localhost:8501
+- Tab 1: Executive KPI Overview & Hypothesis Validation Badges
+- Tab 2: Machine Learning ROC/PR Curves, K-Means PCA Personas, and LDA Topics
+- Tab 3: Live Star Schema Inspector with Neon Cloud / SQLite Querying
+- Tab 4: Power BI DAX Measures & Solution Architecture Downloads
+- Tab 5: AI Care Navigation Assistant (4-Sub-Tab MediRAG Cockpit with live
+         step toasts, entity tags, citations, CRM push, and NLI verification)
+
+COMMAND C: TEST CARE NAVIGATION RAG ENGINE VIA TERMINAL
+Execute a single query:
+python src/rag_engine.py --query "What is the starting dose of Metformin for Type 2 Diabetes?"
+
+Execute the 7 automated benchmark dialogues:
+python src/rag_engine.py
+
+
+--------------------------------------------------------------------------------
+7. POWER BI DESKTOP INTEGRATION (OFFICE LAPTOP)
+--------------------------------------------------------------------------------
+1. Open Power BI Desktop.
+2. Click Get Data -> PostgreSQL Database -> Connect.
+3. Enter connection parameters:
+   - Server: ep-rough-wave-b4tlujf7-pooler.c-6.us-east-2.aws.neon.tech
+   - Database: neondb
+   - Data Connectivity Mode: Import (or DirectQuery)
+4. Enter credentials (select Database tab on the left):
+   - User name: neondb_owner
+   - Password:  npg_YrA5gGhDfpn8
+5. Select the 4 Star Schema tables to load:
+   - fact_interactions_enriched
+   - dim_member_enriched
+   - dim_agent
+   - dim_date
+6. In Model View, verify single-direction 1:* relationships:
+   - dim_member_enriched[member_id] (1) -> fact_interactions_enriched[member_id] (*)
+   - dim_agent[agent_id] (1)           -> fact_interactions_enriched[agent_id] (*)
+   - dim_date[date_key] (1)            -> fact_interactions_enriched[date_key] (*)
+7. Copy DAX measures from powerbi/dax_measures.dax into your report.
+
+
+--------------------------------------------------------------------------------
+8. OFFICE CORPORATE NETWORK & FIREWALL TROUBLESHOOTING
+--------------------------------------------------------------------------------
+ISSUE 1: pip install fails with SSL Certificate Verify Error
+Solution: Pass trusted hosts to pip:
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+
+ISSUE 2: 'streamlit' is not recognized
+Solution: Always run via Python module syntax:
+python -m streamlit run app.py
+
+ISSUE 3: Set-ExecutionPolicy Error in PowerShell
+Solution: Apply execution policy to the current process only:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\venv\Scripts\Activate.ps1
+
+ISSUE 4: Port 8501 is already in use
+Solution: Launch on an alternate port:
+python -m streamlit run app.py --server.port 8502
+
+ISSUE 5: Port 5432 Blocked by Office Corporate Firewall
+Solution: The platform works 100% locally with SQLite (data/kaiser_analytics.db).
+In the Streamlit sidebar, select "SQLite (Local Zero-Setup)" from the dropdown.
+
+
+--------------------------------------------------------------------------------
+9. TEAM CONTRIBUTION & CODING STANDARDS
+--------------------------------------------------------------------------------
+1. Create a feature branch:
+   git checkout -b feature/care-navigation-enhancement
+
+2. Verify syntax and compilation before committing:
+   python -c "import py_compile; py_compile.compile('app.py', doraise=True)"
+   python -c "import py_compile; py_compile.compile('src/rag_engine.py', doraise=True)"
+
+3. Ensure all 7 automated unit benchmarks pass:
+   python src/rag_engine.py
+
+4. Keep database table and column names strictly lowercase (snake_case) to ensure
+   compatibility with PostgreSQL and Power BI DirectQuery.
+================================================================================

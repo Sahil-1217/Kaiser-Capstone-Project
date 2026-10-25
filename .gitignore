@@ -1,0 +1,25 @@
+.neon
+node_modules/
+.env.local
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Sensitive environment credentials
+.env
+
+# Vector DB & temporary files
+data/chroma_db/
+*.log
+
+# Large deep learning models (GitHub blocks files > 100 MB)
+# (Your .pkl files are fine if under 100MB, but ignore PyTorch .pt if large)
+*.pt

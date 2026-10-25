@@ -1,0 +1,234 @@
+// ==============================================================================
+// KAISER PERMANENTE MEMBER EXPERIENCE INTELLIGENCE PLATFORM (CAPSTONE PROJECT 3)
+// ENTERPRISE POWER BI DAX MEASURE CATALOG (POSTGRESQL / CLOUD DIRECTQUERY READY)
+// Tables: fact_interactions_enriched, dim_member_enriched, dim_agent, dim_date
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// FOLDER 1: VOLUME & CORE OPERATIONAL KPIS
+// ------------------------------------------------------------------------------
+
+Total Interactions = 
+COUNTROWS(fact_interactions_enriched)
+
+Total Members = 
+DISTINCTCOUNT(fact_interactions_enriched[member_id])
+
+Active Agents = 
+DISTINCTCOUNT(fact_interactions_enriched[agent_id])
+
+Total Enrolled Members = 
+COUNTROWS(dim_member_enriched)
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 2: OPERATIONAL EFFICIENCY & ESCALATION ANALYTICS
+// ------------------------------------------------------------------------------
+
+Total Escalations = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[escalation_flag] = 1
+)
+
+Total Non-Escalations = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[escalation_flag] = 0
+)
+
+Escalation Rate % = 
+DIVIDE(
+    [Total Escalations],
+    [Total Interactions],
+    0
+)
+
+First Contact Resolution Volume = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[first_contact_resolution] = 1 ||
+    fact_interactions_enriched[first_contact_resolution] = "Y" ||
+    fact_interactions_enriched[first_contact_resolution] = "1"
+)
+
+First Contact Resolution (FCR) Rate % = 
+DIVIDE(
+    [First Contact Resolution Volume],
+    [Total Interactions],
+    0
+)
+
+Average Resolution Time (Mins) = 
+AVERAGE(fact_interactions_enriched[resolution_time])
+
+Average Contacts Per Interaction = 
+AVERAGE(fact_interactions_enriched[total_contacts])
+
+Average Service Friction Index = 
+AVERAGE(fact_interactions_enriched[service_friction_index])
+
+Average Resolution Complexity Index = 
+AVERAGE(fact_interactions_enriched[resolution_complexity_index])
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 3: SENTIMENT & MEMBER EXPERIENCE
+// ------------------------------------------------------------------------------
+
+Average CSAT = 
+AVERAGE(fact_interactions_enriched[satisfaction_score])
+
+Net Promoter Proxy % = 
+DIVIDE(
+    CALCULATE(COUNTROWS(fact_interactions_enriched), fact_interactions_enriched[satisfaction_score] >= 4) - 
+    CALCULATE(COUNTROWS(fact_interactions_enriched), fact_interactions_enriched[satisfaction_score] <= 2),
+    [Total Interactions],
+    0
+)
+
+Positive Sentiment Volume = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[sentiment_score] >= 0.50
+)
+
+Positive Sentiment Rate % = 
+DIVIDE(
+    [Positive Sentiment Volume],
+    [Total Interactions],
+    0
+)
+
+Average Sentiment Score = 
+AVERAGE(fact_interactions_enriched[sentiment_score])
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 4: PREDICTIVE ML & RISK MONITORING
+// ------------------------------------------------------------------------------
+
+Predicted High Risk Escalations = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[predicted_escalation_prob] >= 0.50
+)
+
+Predicted Escalation Exposure % = 
+DIVIDE(
+    [Predicted High Risk Escalations],
+    [Total Interactions],
+    0
+)
+
+Predicted Escalations Count = 
+SUM(fact_interactions_enriched[predicted_escalation_class])
+
+Average Predicted Escalation Probability = 
+AVERAGE(fact_interactions_enriched[predicted_escalation_prob])
+
+Model Escalation Recall % = 
+DIVIDE(
+    CALCULATE(
+        COUNTROWS(fact_interactions_enriched),
+        fact_interactions_enriched[escalation_flag] = 1,
+        fact_interactions_enriched[predicted_escalation_prob] >= 0.50
+    ),
+    [Total Escalations],
+    0
+)
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 5: MEMBER PERSONAS & BEHAVIORAL ATTRIBUTES
+// ------------------------------------------------------------------------------
+
+Average Digital Adoption Score = 
+AVERAGE(dim_member_enriched[digital_adoption_score])
+
+High Friction Member Count = 
+CALCULATE(
+    DISTINCTCOUNT(dim_member_enriched[member_id]),
+    dim_member_enriched[member_segment] = "Escalation-Prone / High-Friction"
+)
+
+Digital First Member Count = 
+CALCULATE(
+    DISTINCTCOUNT(dim_member_enriched[member_id]),
+    dim_member_enriched[member_segment] = "Digital-First Self-Service"
+)
+
+Service Intensive Member Count = 
+CALCULATE(
+    DISTINCTCOUNT(dim_member_enriched[member_id]),
+    dim_member_enriched[member_segment] = "Service-Intensive / High-Touch"
+)
+
+Routine Care Member Count = 
+CALCULATE(
+    DISTINCTCOUNT(dim_member_enriched[member_id]),
+    dim_member_enriched[member_segment] = "Routine Low-Need Care Seekers"
+)
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 6: AI CARE NAVIGATION DEFLECTION & FINANCIAL ROI (PAGE 6)
+// ------------------------------------------------------------------------------
+
+Digital Deflectable Volume = 
+CALCULATE(
+    COUNTROWS(fact_interactions_enriched),
+    fact_interactions_enriched[dominant_topic] IN {"Pharmacy", "Appointments", "Provider Access"},
+    fact_interactions_enriched[contact_channel] = "Phone"
+)
+
+Digital Deflectable % = 
+DIVIDE(
+    [Digital Deflectable Volume],
+    [Total Interactions],
+    0
+)
+
+Target Deflection Rate % = 
+0.30
+
+Deflected Contacts Target = 
+[Digital Deflectable Volume] * [Target Deflection Rate %]
+
+Live Call Unit Cost = 
+15.50
+
+AI Virtual Agent Unit Cost = 
+1.20
+
+Net Unit Cost Savings = 
+[Live Call Unit Cost] - [AI Virtual Agent Unit Cost]
+
+Projected Annual Cost Savings ($) = 
+[Deflected Contacts Target] * [Net Unit Cost Savings]
+
+Projected 3Year Net Savings ($) = 
+([Projected Annual Cost Savings ($)] * 3) - 120000
+
+
+// ------------------------------------------------------------------------------
+// FOLDER 7: TIME INTELLIGENCE MEASURES
+// ------------------------------------------------------------------------------
+
+Interactions MTD = 
+TOTALMTD([Total Interactions], dim_date[date])
+
+Interactions YTD = 
+TOTALYTD([Total Interactions], dim_date[date])
+
+Escalations MTD = 
+TOTALMTD([Total Escalated], dim_date[date])
+
+Escalation Rate Prior Month % = 
+CALCULATE(
+    [Escalation Rate %],
+    PREVIOUSMONTH(dim_date[date])
+)
+
+Escalation Rate MoM Change = 
+[Escalation Rate %] - [Escalation Rate Prior Month %]

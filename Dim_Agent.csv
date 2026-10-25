@@ -1,0 +1,251 @@
+Agent_ID,Department,Queue,Shift,Total_Interactions_Handled,Agent_FCR_Rate,Agent_Avg_CSAT,Agent_Escalation_Rate
+KP-AGT-101,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.6744,3.77,0.186
+KP-AGT-102,Billing & Claims,Claims Adjudication Queue,Day,39,0.8205,4.0,0.0256
+KP-AGT-103,Billing & Claims,Tier 2 Escalations & Grievance,Morning,49,0.6531,3.63,0.1837
+KP-AGT-104,Billing & Claims,Specialist Scheduling Desk,Morning,47,0.5745,3.55,0.2128
+KP-AGT-105,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6522,3.46,0.1739
+KP-AGT-106,Billing & Claims,Tier 2 Escalations & Grievance,Morning,44,0.6591,3.45,0.1591
+KP-AGT-107,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.7143,3.8,0.0857
+KP-AGT-108,Billing & Claims,Tier 2 Escalations & Grievance,Morning,47,0.5957,3.17,0.2553
+KP-AGT-109,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6087,3.52,0.1522
+KP-AGT-110,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.7436,3.74,0.1026
+KP-AGT-111,Billing & Claims,Specialist Scheduling Desk,Day,47,0.6596,3.36,0.1702
+KP-AGT-112,Billing & Claims,Tier 2 Escalations & Grievance,Morning,44,0.6136,3.36,0.25
+KP-AGT-113,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.55,3.45,0.175
+KP-AGT-114,Billing & Claims,Tier 2 Escalations & Grievance,Day,29,0.8621,3.76,0.069
+KP-AGT-115,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.6154,3.18,0.1538
+KP-AGT-116,Appointments,Tier 2 Escalations & Grievance,Morning,38,0.6053,3.37,0.1842
+KP-AGT-117,Billing & Claims,Tier 2 Escalations & Grievance,Morning,38,0.5789,3.45,0.1316
+KP-AGT-118,Appointments,Tier 2 Escalations & Grievance,Day,42,0.7381,3.71,0.0952
+KP-AGT-119,Appointments,Tier 2 Escalations & Grievance,Morning,41,0.8049,3.8,0.0488
+KP-AGT-120,Billing & Claims,Tier 2 Escalations & Grievance,Day,58,0.5345,3.19,0.2241
+KP-AGT-121,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.6111,3.06,0.2778
+KP-AGT-122,Billing & Claims,Tier 2 Escalations & Grievance,Day,29,0.5517,3.48,0.1034
+KP-AGT-123,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.7429,3.4,0.2
+KP-AGT-124,Billing & Claims,Tier 2 Escalations & Grievance,Day,33,0.5152,3.3,0.1818
+KP-AGT-125,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.7174,3.63,0.1087
+KP-AGT-126,Billing & Claims,Tier 2 Escalations & Grievance,Day,48,0.5833,3.06,0.25
+KP-AGT-127,Billing & Claims,Tier 2 Escalations & Grievance,Morning,44,0.7045,3.61,0.1591
+KP-AGT-128,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.6977,3.58,0.2093
+KP-AGT-129,Billing & Claims,Tier 2 Escalations & Grievance,Day,37,0.7838,3.76,0.1081
+KP-AGT-130,Billing & Claims,Tier 2 Escalations & Grievance,Morning,46,0.6522,3.39,0.1522
+KP-AGT-131,Billing & Claims,Tier 2 Escalations & Grievance,Day,31,0.6452,3.23,0.2258
+KP-AGT-132,Billing & Claims,Tier 2 Escalations & Grievance,Day,48,0.5833,3.5,0.0417
+KP-AGT-133,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6,3.34,0.1714
+KP-AGT-134,Appointments,Tier 2 Escalations & Grievance,Morning,35,0.5429,3.43,0.0857
+KP-AGT-135,Billing & Claims,Tier 2 Escalations & Grievance,Morning,45,0.6222,3.58,0.1556
+KP-AGT-136,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.5366,3.37,0.1951
+KP-AGT-137,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.6744,3.16,0.2326
+KP-AGT-138,Billing & Claims,Tier 2 Escalations & Grievance,Morning,30,0.5667,3.4,0.1667
+KP-AGT-139,Billing & Claims,Pharmacy Fulfillment Desk,Day,38,0.7368,3.5,0.1842
+KP-AGT-140,Billing & Claims,Claims Adjudication Queue,Day,45,0.5333,3.18,0.2667
+KP-AGT-141,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6522,3.59,0.1087
+KP-AGT-142,Billing & Claims,Specialist Scheduling Desk,Day,36,0.5833,3.39,0.2222
+KP-AGT-143,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.5526,3.29,0.1842
+KP-AGT-144,Billing & Claims,Specialist Scheduling Desk,Day,32,0.75,4.06,0.0312
+KP-AGT-145,Billing & Claims,Claims Adjudication Queue,Morning,35,0.4571,3.14,0.2571
+KP-AGT-146,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.7073,3.66,0.1463
+KP-AGT-147,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.561,3.1,0.2927
+KP-AGT-148,Appointments,Tier 2 Escalations & Grievance,Day,40,0.575,3.55,0.175
+KP-AGT-149,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.475,3.58,0.025
+KP-AGT-150,Billing & Claims,Tier 2 Escalations & Grievance,Morning,49,0.6939,3.69,0.1837
+KP-AGT-151,Billing & Claims,Claims Adjudication Queue,Day,47,0.6596,3.47,0.1489
+KP-AGT-152,Appointments,Specialist Scheduling Desk,Morning,45,0.6222,3.38,0.2889
+KP-AGT-153,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.6667,3.62,0.1429
+KP-AGT-154,Billing & Claims,Claims Adjudication Queue,Morning,42,0.5476,3.0,0.3095
+KP-AGT-155,Billing & Claims,Specialist Scheduling Desk,Day,42,0.6429,3.45,0.2143
+KP-AGT-156,Billing & Claims,Pharmacy Fulfillment Desk,Day,45,0.6667,3.47,0.1111
+KP-AGT-157,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6585,3.41,0.1951
+KP-AGT-158,Billing & Claims,Specialist Scheduling Desk,Morning,45,0.6667,3.62,0.1333
+KP-AGT-159,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.6744,3.49,0.1395
+KP-AGT-160,Billing & Claims,Tier 2 Escalations & Grievance,Day,37,0.4865,3.27,0.1622
+KP-AGT-161,Billing & Claims,Tier 2 Escalations & Grievance,Day,57,0.614,3.47,0.1579
+KP-AGT-162,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.5641,3.15,0.2308
+KP-AGT-163,Appointments,Specialist Scheduling Desk,Day,41,0.5854,3.32,0.1463
+KP-AGT-164,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.6905,3.62,0.119
+KP-AGT-165,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.6111,3.33,0.1944
+KP-AGT-166,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.7143,3.74,0.1714
+KP-AGT-167,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.5789,3.03,0.2632
+KP-AGT-168,Billing & Claims,Tier 2 Escalations & Grievance,Morning,31,0.6452,3.65,0.129
+KP-AGT-169,Billing & Claims,Tier 2 Escalations & Grievance,Morning,49,0.6939,3.55,0.1837
+KP-AGT-170,Billing & Claims,Tier 2 Escalations & Grievance,Day,34,0.7059,3.71,0.1176
+KP-AGT-171,Appointments,Specialist Scheduling Desk,Day,36,0.5278,3.31,0.25
+KP-AGT-172,Billing & Claims,Tier 2 Escalations & Grievance,Day,24,0.7083,3.62,0.125
+KP-AGT-173,Billing & Claims,Tier 2 Escalations & Grievance,Day,48,0.7083,3.48,0.1458
+KP-AGT-174,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.6591,3.45,0.1591
+KP-AGT-175,Billing & Claims,Tier 2 Escalations & Grievance,Day,37,0.5676,3.3,0.0811
+KP-AGT-176,Billing & Claims,Tier 2 Escalations & Grievance,Morning,40,0.7,3.4,0.15
+KP-AGT-177,Billing & Claims,Pharmacy Fulfillment Desk,Day,32,0.6562,3.41,0.1562
+KP-AGT-178,Billing & Claims,Tier 2 Escalations & Grievance,Day,21,0.619,3.57,0.1905
+KP-AGT-179,Appointments,Tier 2 Escalations & Grievance,Morning,44,0.5909,3.73,0.1136
+KP-AGT-180,Billing & Claims,Tier 2 Escalations & Grievance,Day,34,0.6765,3.38,0.2353
+KP-AGT-181,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.5476,3.31,0.2143
+KP-AGT-182,Billing & Claims,Specialist Scheduling Desk,Day,44,0.6136,3.43,0.1591
+KP-AGT-183,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6829,3.68,0.1463
+KP-AGT-184,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.4103,3.26,0.1282
+KP-AGT-185,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.5,3.47,0.2368
+KP-AGT-186,Billing & Claims,Tier 2 Escalations & Grievance,Day,31,0.6452,3.58,0.1613
+KP-AGT-187,Billing & Claims,Tier 2 Escalations & Grievance,Day,29,0.6552,3.31,0.2069
+KP-AGT-188,Billing & Claims,Claims Adjudication Queue,Morning,32,0.5938,3.38,0.125
+KP-AGT-189,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6098,3.27,0.2439
+KP-AGT-190,Billing & Claims,Tier 2 Escalations & Grievance,Day,57,0.614,3.51,0.1228
+KP-AGT-191,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.7,3.5,0.225
+KP-AGT-192,Billing & Claims,Tier 2 Escalations & Grievance,Morning,41,0.6098,3.34,0.2195
+KP-AGT-193,Clinical Advice / Care Navigation,Tier 2 Escalations & Grievance,Morning,48,0.6042,3.4,0.1875
+KP-AGT-194,Billing & Claims,Tier 2 Escalations & Grievance,Morning,34,0.5882,3.44,0.1471
+KP-AGT-195,Billing & Claims,Tier 2 Escalations & Grievance,Day,45,0.6222,3.42,0.3111
+KP-AGT-196,Billing & Claims,Tier 2 Escalations & Grievance,Morning,39,0.7436,3.67,0.1538
+KP-AGT-197,Appointments,Tier 2 Escalations & Grievance,Day,57,0.7193,3.54,0.2281
+KP-AGT-198,Clinical Advice / Care Navigation,Tier 2 Escalations & Grievance,Day,38,0.6053,3.29,0.2105
+KP-AGT-199,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.5429,3.6,0.1429
+KP-AGT-200,Billing & Claims,Tier 2 Escalations & Grievance,Day,30,0.4667,3.37,0.2
+KP-AGT-201,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.4884,3.16,0.2093
+KP-AGT-202,Billing & Claims,Specialist Scheduling Desk,Day,47,0.7021,3.62,0.1277
+KP-AGT-203,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.6316,3.29,0.2105
+KP-AGT-204,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.5814,3.33,0.186
+KP-AGT-205,Appointments,Specialist Scheduling Desk,Day,40,0.725,3.6,0.15
+KP-AGT-206,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.575,3.38,0.15
+KP-AGT-207,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.6136,3.43,0.0909
+KP-AGT-208,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.619,3.79,0.1429
+KP-AGT-209,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.6744,3.51,0.2326
+KP-AGT-210,Appointments,Tier 2 Escalations & Grievance,Day,30,0.7,3.47,0.1667
+KP-AGT-211,Billing & Claims,Tier 2 Escalations & Grievance,Morning,29,0.5172,3.52,0.1724
+KP-AGT-212,Billing & Claims,Tier 2 Escalations & Grievance,Day,48,0.6042,3.27,0.2292
+KP-AGT-213,Appointments,Specialist Scheduling Desk,Day,32,0.75,3.44,0.2188
+KP-AGT-214,Clinical Advice / Care Navigation,Tier 2 Escalations & Grievance,Day,45,0.6222,3.42,0.1556
+KP-AGT-215,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.6977,3.42,0.2093
+KP-AGT-216,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.619,3.48,0.1429
+KP-AGT-217,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.5682,3.18,0.25
+KP-AGT-218,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.641,3.46,0.1538
+KP-AGT-219,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6098,3.73,0.0976
+KP-AGT-220,Billing & Claims,Tier 2 Escalations & Grievance,Day,42,0.7143,3.45,0.1905
+KP-AGT-221,Billing & Claims,Tier 2 Escalations & Grievance,Day,25,0.6,3.36,0.12
+KP-AGT-222,Appointments,Specialist Scheduling Desk,Day,42,0.6905,3.52,0.1667
+KP-AGT-223,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.75,3.69,0.0556
+KP-AGT-224,Appointments,Tier 2 Escalations & Grievance,Day,45,0.5333,3.47,0.1778
+KP-AGT-225,Billing & Claims,Tier 2 Escalations & Grievance,Morning,45,0.6667,3.6,0.1111
+KP-AGT-226,Billing & Claims,Tier 2 Escalations & Grievance,Morning,46,0.6957,3.43,0.1739
+KP-AGT-227,Billing & Claims,Tier 2 Escalations & Grievance,Morning,61,0.7213,3.34,0.2787
+KP-AGT-228,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.675,3.5,0.225
+KP-AGT-229,Appointments,Tier 2 Escalations & Grievance,Morning,35,0.5429,2.83,0.3429
+KP-AGT-230,Billing & Claims,Tier 2 Escalations & Grievance,Day,32,0.6562,3.72,0.125
+KP-AGT-231,Billing & Claims,Tier 2 Escalations & Grievance,Day,34,0.5294,3.26,0.1765
+KP-AGT-232,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.7805,3.39,0.122
+KP-AGT-233,Billing & Claims,Tier 2 Escalations & Grievance,Day,45,0.6,3.27,0.2
+KP-AGT-234,Billing & Claims,Claims Adjudication Queue,Day,26,0.6154,3.35,0.2308
+KP-AGT-235,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.5,3.3,0.2045
+KP-AGT-236,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6571,3.23,0.2571
+KP-AGT-237,Billing & Claims,Specialist Scheduling Desk,Evening,44,0.6591,3.48,0.1364
+KP-AGT-238,Billing & Claims,Tier 2 Escalations & Grievance,Day,57,0.6842,3.63,0.193
+KP-AGT-239,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.7143,3.6,0.1429
+KP-AGT-240,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.6154,3.36,0.2308
+KP-AGT-241,Billing & Claims,Tier 2 Escalations & Grievance,Day,34,0.5,3.35,0.1471
+KP-AGT-242,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6571,3.66,0.1714
+KP-AGT-243,Billing & Claims,Tier 2 Escalations & Grievance,Morning,46,0.6739,3.59,0.1087
+KP-AGT-244,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.5429,3.43,0.1143
+KP-AGT-245,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.6279,3.44,0.186
+KP-AGT-246,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.5,3.05,0.275
+KP-AGT-247,Billing & Claims,Tier 2 Escalations & Grievance,Day,47,0.766,3.62,0.1702
+KP-AGT-248,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.5833,3.36,0.25
+KP-AGT-249,Billing & Claims,Tier 2 Escalations & Grievance,Morning,31,0.6129,3.48,0.129
+KP-AGT-250,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.6591,3.48,0.2045
+KP-AGT-251,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6098,3.22,0.2195
+KP-AGT-252,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.641,3.54,0.1282
+KP-AGT-253,Billing & Claims,Tier 2 Escalations & Grievance,Morning,31,0.6129,3.58,0.129
+KP-AGT-254,Billing & Claims,Tier 2 Escalations & Grievance,Morning,38,0.6053,3.26,0.2632
+KP-AGT-255,Billing & Claims,Tier 2 Escalations & Grievance,Day,50,0.72,3.76,0.14
+KP-AGT-256,Appointments,Specialist Scheduling Desk,Day,40,0.7,3.48,0.2
+KP-AGT-257,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.5833,3.47,0.1944
+KP-AGT-258,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6957,3.52,0.1957
+KP-AGT-259,Billing & Claims,Tier 2 Escalations & Grievance,Day,50,0.78,3.54,0.22
+KP-AGT-260,Appointments,Specialist Scheduling Desk,Day,43,0.5814,3.49,0.1395
+KP-AGT-261,Appointments,Tier 2 Escalations & Grievance,Morning,39,0.5128,3.23,0.1795
+KP-AGT-262,Appointments,Specialist Scheduling Desk,Morning,42,0.8333,3.64,0.119
+KP-AGT-263,Appointments,Specialist Scheduling Desk,Day,37,0.6486,3.57,0.1892
+KP-AGT-264,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6829,3.66,0.0732
+KP-AGT-265,Appointments,Specialist Scheduling Desk,Day,40,0.6,3.78,0.05
+KP-AGT-266,Billing & Claims,Tier 2 Escalations & Grievance,Morning,43,0.6744,3.53,0.1628
+KP-AGT-267,Billing & Claims,Tier 2 Escalations & Grievance,Morning,40,0.675,3.55,0.125
+KP-AGT-268,Appointments,Specialist Scheduling Desk,Day,40,0.65,3.78,0.125
+KP-AGT-269,Billing & Claims,Tier 2 Escalations & Grievance,Morning,51,0.5686,3.16,0.2549
+KP-AGT-270,Billing & Claims,Tier 2 Escalations & Grievance,Morning,46,0.6739,3.67,0.087
+KP-AGT-271,Appointments,Tier 2 Escalations & Grievance,Day,35,0.7714,3.74,0.1429
+KP-AGT-272,Appointments,Specialist Scheduling Desk,Morning,36,0.6389,3.39,0.1667
+KP-AGT-273,Billing & Claims,Tier 2 Escalations & Grievance,Morning,31,0.5806,3.23,0.2581
+KP-AGT-274,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.6667,3.69,0.1282
+KP-AGT-275,Billing & Claims,Tier 2 Escalations & Grievance,Day,24,0.5833,3.21,0.2083
+KP-AGT-276,Billing & Claims,Tier 2 Escalations & Grievance,Day,54,0.6296,3.35,0.1667
+KP-AGT-277,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.5897,3.38,0.2051
+KP-AGT-278,Appointments,Tier 2 Escalations & Grievance,Day,44,0.7955,3.68,0.1591
+KP-AGT-279,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.4878,3.1,0.3171
+KP-AGT-280,Appointments,Tier 2 Escalations & Grievance,Day,30,0.7667,3.83,0.0333
+KP-AGT-281,Appointments,Specialist Scheduling Desk,Day,36,0.75,3.78,0.1111
+KP-AGT-282,Billing & Claims,Tier 2 Escalations & Grievance,Morning,30,0.4667,3.17,0.1667
+KP-AGT-283,Billing & Claims,Tier 2 Escalations & Grievance,Day,32,0.5938,3.22,0.2812
+KP-AGT-284,Billing & Claims,Tier 2 Escalations & Grievance,Day,23,0.5217,3.3,0.2174
+KP-AGT-285,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6286,3.69,0.0857
+KP-AGT-286,Appointments,Tier 2 Escalations & Grievance,Day,40,0.725,3.98,0.05
+KP-AGT-287,Billing & Claims,Tier 2 Escalations & Grievance,Morning,41,0.6829,3.39,0.2439
+KP-AGT-288,Billing & Claims,Tier 2 Escalations & Grievance,Morning,42,0.6429,3.31,0.2143
+KP-AGT-289,Billing & Claims,Tier 2 Escalations & Grievance,Morning,48,0.5833,3.52,0.1458
+KP-AGT-290,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.7045,3.59,0.1591
+KP-AGT-291,Billing & Claims,Tier 2 Escalations & Grievance,Morning,48,0.6667,3.17,0.2292
+KP-AGT-292,Appointments,Specialist Scheduling Desk,Day,40,0.725,3.45,0.2
+KP-AGT-293,Billing & Claims,Pharmacy Fulfillment Desk,Day,43,0.6512,3.4,0.1163
+KP-AGT-294,Billing & Claims,Tier 2 Escalations & Grievance,Morning,38,0.5263,3.45,0.1579
+KP-AGT-295,Billing & Claims,Tier 2 Escalations & Grievance,Day,32,0.5625,3.66,0.125
+KP-AGT-296,Billing & Claims,Tier 2 Escalations & Grievance,Day,22,0.5909,3.05,0.3182
+KP-AGT-297,Billing & Claims,Tier 2 Escalations & Grievance,Morning,57,0.7544,3.7,0.1754
+KP-AGT-298,Billing & Claims,Tier 2 Escalations & Grievance,Morning,34,0.5588,3.18,0.2647
+KP-AGT-299,Billing & Claims,Tier 2 Escalations & Grievance,Morning,35,0.8,3.63,0.1429
+KP-AGT-300,Appointments,Tier 2 Escalations & Grievance,Day,45,0.7333,3.56,0.1778
+KP-AGT-301,Billing & Claims,Tier 2 Escalations & Grievance,Day,28,0.7143,3.64,0.1786
+KP-AGT-302,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.65,3.28,0.2
+KP-AGT-303,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.4737,3.26,0.1579
+KP-AGT-304,Billing & Claims,Tier 2 Escalations & Grievance,Morning,47,0.5957,3.51,0.1702
+KP-AGT-305,Billing & Claims,Tier 2 Escalations & Grievance,Day,33,0.6667,3.52,0.1212
+KP-AGT-306,Billing & Claims,Tier 2 Escalations & Grievance,Morning,30,0.6667,3.0,0.3667
+KP-AGT-307,Billing & Claims,Specialist Scheduling Desk,Day,42,0.5,3.29,0.1667
+KP-AGT-308,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.5455,3.16,0.2727
+KP-AGT-309,Billing & Claims,Tier 2 Escalations & Grievance,Day,48,0.6042,3.46,0.125
+KP-AGT-310,Appointments,Specialist Scheduling Desk,Day,35,0.6857,3.74,0.1143
+KP-AGT-311,Billing & Claims,Tier 2 Escalations & Grievance,Day,39,0.5385,3.26,0.2051
+KP-AGT-312,Billing & Claims,Tier 2 Escalations & Grievance,Morning,40,0.625,3.4,0.15
+KP-AGT-313,Billing & Claims,Tier 2 Escalations & Grievance,Day,44,0.6364,3.43,0.2045
+KP-AGT-314,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.7073,3.2,0.2195
+KP-AGT-315,Appointments,Specialist Scheduling Desk,Morning,35,0.7429,3.94,0.1429
+KP-AGT-316,Appointments,Specialist Scheduling Desk,Morning,48,0.5625,3.58,0.125
+KP-AGT-317,Billing & Claims,Tier 2 Escalations & Grievance,Day,38,0.6316,3.79,0.1053
+KP-AGT-318,Appointments,Specialist Scheduling Desk,Day,51,0.6471,3.65,0.1569
+KP-AGT-319,Billing & Claims,Tier 2 Escalations & Grievance,Day,33,0.6667,3.64,0.1212
+KP-AGT-320,Billing & Claims,Tier 2 Escalations & Grievance,Day,36,0.5556,3.11,0.2778
+KP-AGT-321,Billing & Claims,Tier 2 Escalations & Grievance,Evening,38,0.5526,3.24,0.2105
+KP-AGT-322,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6957,3.54,0.1304
+KP-AGT-323,Appointments,Tier 2 Escalations & Grievance,Day,44,0.6591,3.27,0.2045
+KP-AGT-324,Billing & Claims,Tier 2 Escalations & Grievance,Morning,44,0.75,3.75,0.1364
+KP-AGT-325,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.475,3.38,0.2
+KP-AGT-326,Billing & Claims,Tier 2 Escalations & Grievance,Day,47,0.6809,3.64,0.1489
+KP-AGT-327,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6286,3.54,0.1714
+KP-AGT-328,Billing & Claims,Tier 2 Escalations & Grievance,Morning,34,0.6471,3.62,0.1765
+KP-AGT-329,Billing & Claims,Tier 2 Escalations & Grievance,Day,25,0.56,3.32,0.16
+KP-AGT-330,Billing & Claims,Tier 2 Escalations & Grievance,Day,47,0.6383,3.62,0.1277
+KP-AGT-331,Billing & Claims,Specialist Scheduling Desk,Day,38,0.8421,3.68,0.1579
+KP-AGT-332,Billing & Claims,Tier 2 Escalations & Grievance,Day,34,0.6471,3.59,0.0882
+KP-AGT-333,Billing & Claims,Tier 2 Escalations & Grievance,Day,33,0.6364,3.39,0.1515
+KP-AGT-334,Billing & Claims,Specialist Scheduling Desk,Morning,35,0.5429,3.54,0.0857
+KP-AGT-335,Billing & Claims,Tier 2 Escalations & Grievance,Morning,38,0.5789,3.21,0.1842
+KP-AGT-336,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.6047,3.37,0.1628
+KP-AGT-337,Billing & Claims,Tier 2 Escalations & Grievance,Day,56,0.625,3.34,0.1786
+KP-AGT-338,Billing & Claims,Tier 2 Escalations & Grievance,Day,45,0.5556,3.49,0.1333
+KP-AGT-339,Billing & Claims,Claims Adjudication Queue,Morning,39,0.4615,3.08,0.2821
+KP-AGT-340,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6087,3.52,0.1304
+KP-AGT-341,Billing & Claims,Tier 2 Escalations & Grievance,Morning,35,0.6,3.37,0.2286
+KP-AGT-342,Billing & Claims,Tier 2 Escalations & Grievance,Morning,31,0.5161,3.06,0.2258
+KP-AGT-343,Billing & Claims,Tier 2 Escalations & Grievance,Day,40,0.7,3.6,0.15
+KP-AGT-344,Billing & Claims,Tier 2 Escalations & Grievance,Day,43,0.6512,3.47,0.1395
+KP-AGT-345,Billing & Claims,Tier 2 Escalations & Grievance,Day,35,0.6,3.43,0.2571
+KP-AGT-346,Billing & Claims,Tier 2 Escalations & Grievance,Evening,27,0.7407,3.74,0.1481
+KP-AGT-347,Billing & Claims,Tier 2 Escalations & Grievance,Day,46,0.6522,3.63,0.1522
+KP-AGT-348,Billing & Claims,Tier 2 Escalations & Grievance,Day,45,0.6,3.2,0.2444
+KP-AGT-349,Billing & Claims,Tier 2 Escalations & Grievance,Day,41,0.6829,3.59,0.2439
+KP-AGT-350,Billing & Claims,Tier 2 Escalations & Grievance,Day,47,0.5957,3.13,0.234

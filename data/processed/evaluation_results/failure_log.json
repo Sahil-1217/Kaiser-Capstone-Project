@@ -1,0 +1,56 @@
+[
+  {
+    "failure_id": "log_1",
+    "failure_type": "HALLUCINATION_FAILURE",
+    "subtype": "UNGROUNDED",
+    "query": "I need a 90-day refill of my Atorvastatin 20mg shipped to my home address.",
+    "details": "Ungrounded claim (insufficient policy evidence): 'Under your Kaiser Permanente health plan, maintenance medications such as **Atorvastatin 20mg** qualify for **90-day home mail-order delivery** with **$0 standard shipping** .'",
+    "evidence": "set automatic refill home delivery diabetic supply insulin glad assist activat day auto refill mail order zero copay sea",
+    "timestamp": 1792945712.9728172
+  },
+  {
+    "failure_id": "log_2",
+    "failure_type": "HALLUCINATION_FAILURE",
+    "subtype": "UNGROUNDED",
+    "query": "Can I book an appointment with Dr. Hernandez in Pediatric Care for this Thursday afternoon?",
+    "details": "Ungrounded claim (insufficient policy evidence): 'Once confirmed, it will synchronize with your mobile calendar.'",
+    "evidence": "CDC Clinical Procedures for Pneumonia and Sepsis: For hospitalized patients with severe community-acquired pneumonia, in",
+    "timestamp": 1792945713.0494618
+  },
+  {
+    "failure_id": "log_3",
+    "failure_type": "HALLUCINATION_FAILURE",
+    "subtype": "UNGROUNDED",
+    "query": "Why was my emergency room claim from when I was traveling in Texas denied? I thought Kaiser covers emergency care anywhere.",
+    "details": "Ungrounded claim (insufficient policy evidence): 'Under Kaiser Permanente plan terms, **Emergency Medical Services are covered anywhere in the world** .'",
+    "evidence": "emergency room visit travel state deni claim network examine emergency medical claim submission emergency care cover net",
+    "timestamp": 1792945713.1642895
+  },
+  {
+    "failure_id": "log_4",
+    "failure_type": "HALLUCINATION_FAILURE",
+    "subtype": "UNGROUNDED",
+    "query": "Can I see an orthopedic surgeon outside of Kaiser Permanente for my knee surgery without paying out of pocket?",
+    "details": "Ungrounded claim (insufficient policy evidence): 'Under your Kaiser HMO health plan, non-emergency care from an outside specialist requires **Prior Authorization** from your primary care physician and the regional medical review group .'",
+    "evidence": "World Health Organization (WHO) Guidelines for Hypertension and Diabetes: First-line pharmacological management for Type",
+    "timestamp": 1792945713.230973
+  },
+  {
+    "failure_id": "log_5",
+    "failure_type": "EMERGENCY_INTERCEPT",
+    "subtype": "ACUTE_SYMPTOM",
+    "query": "I have been having sudden severe chest pain and shortness of breath for the past 20 minutes.",
+    "details": "Acute symptoms detected (chest pain / dyspnea); routed to 911 / Advice Nurse directive.",
+    "evidence": "Kaiser Emergency Clinical Protocol Sec 1.1",
+    "timestamp": 1792945713.2341247
+  },
+  {
+    "failure_id": "log_6",
+    "failure_type": "HALLUCINATION_FAILURE",
+    "subtype": "UNGROUNDED",
+    "query": "I need a 90-day refill of my Atorvastatin 20mg shipped to my home address.",
+    "details": "Ungrounded claim (insufficient policy evidence): 'Under your Kaiser Permanente health plan, maintenance medications such as **Atorvastatin 20mg** qualify for **90-day home mail-order delivery** with **$0 standard shipping** .'",
+    "evidence": "set automatic refill home delivery diabetic supply insulin glad assist activat day auto refill mail order zero copay sea",
+    "timestamp": 1792947332.7018049
+  }
+]

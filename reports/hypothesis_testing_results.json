@@ -1,0 +1,69 @@
+{
+    "hypothesis_1": {
+        "hypothesis": "H1: Longer resolution times significantly reduce member satisfaction",
+        "test_type": "Spearman Rank Correlation & Pearson Correlation",
+        "sample_size": 10000,
+        "spearman_rho": -0.4628,
+        "spearman_p_value": 0.0,
+        "pearson_r": -0.4548,
+        "pearson_p_value": 0.0,
+        "alpha": 0.05,
+        "is_statistically_significant": true,
+        "business_conclusion": "Statistically significant negative correlation (rho = -0.4628, p = 0.00e+00). Every 10-minute increase in resolution duration is associated with a measurable degradation in member satisfaction ratings. Operational efforts to reduce handle times directly improve CSAT."
+    },
+    "hypothesis_2": {
+        "hypothesis": "H2: Members with multiple contacts have a higher escalation probability",
+        "test_type": "Welch's Two-Sample t-test (unequal variances) & Mann-Whitney U",
+        "escalated_group": {
+            "n": 1738,
+            "mean_contacts": 2.879,
+            "std": 1.604
+        },
+        "non_escalated_group": {
+            "n": 8262,
+            "mean_contacts": 1.6,
+            "std": 0.956
+        },
+        "welch_t_stat": 32.0523,
+        "welch_p_value": 2.4819014563774837e-182,
+        "mann_whitney_u_stat": 10621484.0,
+        "mann_whitney_p_value": 1.4127370242710473e-268,
+        "cohens_d_effect_size": 1.1665,
+        "alpha": 0.05,
+        "is_statistically_significant": true,
+        "business_conclusion": "Statistically significant difference confirmed (t = 32.0523, p = 2.48e-182, Cohen's d = 1.167). Escalated interactions averaged 2.88 contacts vs. 1.60 contacts for non-escalated cases. Failing to resolve inquiries on the primary contact exponentially increases escalation risk."
+    },
+    "hypothesis_3": {
+        "hypothesis": "H3: Digital channels have lower escalation rates than voice calls",
+        "test_type": "Pearson Chi-Square Test of Independence & Odds Ratio",
+        "voice_escalation_rate": 0.2522,
+        "digital_escalation_rate": 0.1069,
+        "chi2_statistic": 338.0008,
+        "p_value": 1.7388269719909387e-75,
+        "degrees_of_freedom": 1,
+        "odds_ratio_voice_vs_digital": 2.8186,
+        "odds_ratio_95_ci": [
+            2.517,
+            3.1564
+        ],
+        "alpha": 0.05,
+        "is_statistically_significant": true,
+        "business_conclusion": "Statistically significant difference confirmed (Chi2 = 338.0008, p = 1.74e-75, df = 1). Digital channels exhibited an escalation rate of 10.69% versus 25.22% for Voice calls. Voice interactions have 2.82x higher odds of escalation (95% CI: [2.52, 3.16]). Care navigation strategies should route initial triage to asynchronous and interactive digital channels."
+    },
+    "confidence_intervals": {
+        "escalation_rate": {
+            "point_estimate": 0.1738,
+            "percentage": 17.38,
+            "ci_95_lower": 0.1665,
+            "ci_95_upper": 0.1814,
+            "method": "Wilson Score Interval"
+        },
+        "mean_csat": {
+            "point_estimate": 3.4575,
+            "sample_std": 1.2159,
+            "ci_95_lower": 3.4337,
+            "ci_95_upper": 3.4813,
+            "method": "Student's t-distribution"
+        }
+    }
+}

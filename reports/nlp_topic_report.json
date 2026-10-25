@@ -1,0 +1,161 @@
+{
+    "topics": {
+        "Appointments": {
+            "topic_index": 0,
+            "top_words": [
+                "care",
+                "can",
+                "pediatric",
+                "slot",
+                "open",
+                "hernandez",
+                "day",
+                "connect",
+                "primary",
+                "schedul",
+                "schedule"
+            ]
+        },
+        "Pharmacy": {
+            "topic_index": 1,
+            "top_words": [
+                "refill",
+                "check",
+                "claim",
+                "pharmacy",
+                "mail",
+                "prescription",
+                "process",
+                "clinical",
+                "request",
+                "order",
+                "day"
+            ]
+        },
+        "Claims": {
+            "topic_index": 2,
+            "top_words": [
+                "claim",
+                "care",
+                "emergency",
+                "network",
+                "visit",
+                "health",
+                "deni",
+                "reimbursement",
+                "behavioral",
+                "friday",
+                "week"
+            ]
+        },
+        "Billing": {
+            "topic_index": 3,
+            "top_words": [
+                "appointment",
+                "center",
+                "care",
+                "clinic",
+                "open",
+                "can",
+                "book",
+                "week",
+                "today",
+                "physical",
+                "medical"
+            ]
+        },
+        "Provider Access": {
+            "topic_index": 4,
+            "top_words": [
+                "bill",
+                "payment",
+                "month",
+                "deductible",
+                "plan",
+                "authorization",
+                "statement",
+                "pocket",
+                "last",
+                "correct",
+                "ledger"
+            ]
+        }
+    },
+    "high_friction_keywords": {
+        "charg": {
+            "friction_lift": 0.0395,
+            "escalated_tfidf": 0.0474,
+            "non_escalated_tfidf": 0.0079
+        },
+        "claim": {
+            "friction_lift": 0.0366,
+            "escalated_tfidf": 0.0971,
+            "non_escalated_tfidf": 0.0605
+        },
+        "twice": {
+            "friction_lift": 0.0352,
+            "escalated_tfidf": 0.043,
+            "non_escalated_tfidf": 0.0079
+        },
+        "wait": {
+            "friction_lift": 0.0316,
+            "escalated_tfidf": 0.0425,
+            "non_escalated_tfidf": 0.0108
+        },
+        "receiv": {
+            "friction_lift": 0.028,
+            "escalated_tfidf": 0.0375,
+            "non_escalated_tfidf": 0.0095
+        },
+        "bill": {
+            "friction_lift": 0.0241,
+            "escalated_tfidf": 0.0579,
+            "non_escalated_tfidf": 0.0338
+        },
+        "delay": {
+            "friction_lift": 0.0219,
+            "escalated_tfidf": 0.0274,
+            "non_escalated_tfidf": 0.0055
+        },
+        "care": {
+            "friction_lift": 0.0217,
+            "escalated_tfidf": 0.0615,
+            "non_escalated_tfidf": 0.0398
+        },
+        "cover": {
+            "friction_lift": 0.0216,
+            "escalated_tfidf": 0.0276,
+            "non_escalated_tfidf": 0.0059
+        },
+        "submitt": {
+            "friction_lift": 0.0213,
+            "escalated_tfidf": 0.0273,
+            "non_escalated_tfidf": 0.0061
+        },
+        "conflict": {
+            "friction_lift": 0.0207,
+            "escalated_tfidf": 0.0269,
+            "non_escalated_tfidf": 0.0062
+        },
+        "pay": {
+            "friction_lift": 0.0194,
+            "escalated_tfidf": 0.0323,
+            "non_escalated_tfidf": 0.0129
+        },
+        "health": {
+            "friction_lift": 0.0193,
+            "escalated_tfidf": 0.0305,
+            "non_escalated_tfidf": 0.0112
+        },
+        "told": {
+            "friction_lift": 0.0191,
+            "escalated_tfidf": 0.0258,
+            "non_escalated_tfidf": 0.0067
+        },
+        "urgent care": {
+            "friction_lift": 0.0189,
+            "escalated_tfidf": 0.025,
+            "non_escalated_tfidf": 0.0061
+        }
+    }
+}

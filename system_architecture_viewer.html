@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaiser Permanente | Complete System Flowcharts & UML Diagrams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --kp-navy: #003B71;
+            --kp-blue: #005A9C;
+            --kp-teal: #007A87;
+            --kp-light-blue: #E0F2FE;
+            --kp-slate: #0F172A;
+            --kp-card-bg: #FFFFFF;
+            --kp-body-bg: #F8FAFC;
+            --kp-border: #E2E8F0;
+            --kp-green: #16A34A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--kp-body-bg);
+            color: var(--kp-slate);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Top Hero Header */
+        .header {
+            background: linear-gradient(135deg, var(--kp-navy) 0%, var(--kp-blue) 50%, var(--kp-teal) 100%);
+            color: #ffffff;
+            padding: 32px 40px;
+            box-shadow: 0 4px 20px rgba(0, 59, 113, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header p {
+            color: var(--kp-light-blue);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            color: #ffffff;
+            text-decoration: none;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        /* Navigation Buttons */
+        .nav-bar {
+            max-width: 1400px;
+            margin: 20px auto 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 1px solid var(--kp-border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--kp-blue);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn:hover {
+            background: var(--kp-blue);
+            color: #ffffff;
+            border-color: var(--kp-blue);
+            transform: translateY(-1px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        /* Diagram Cards */
+        .diagram-card {
+            background: var(--kp-card-bg);
+            border: 1px solid var(--kp-border);
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            overflow: hidden;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .diagram-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--kp-border);
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 6px solid var(--kp-blue);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--kp-navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-badge {
+            background: var(--kp-light-blue);
+            color: var(--kp-blue);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .copy-btn {
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #E2E8F0;
+            color: #0F172A;
+        }
+
+        .card-desc {
+            padding: 16px 28px 0 28px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .diagram-canvas {
+            padding: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            min-height: 360px;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Toast Alert */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1400px;
+            margin: 40px auto 0 auto;
+            text-align: center;
+            color: #64748B;
+            font-size: 0.85rem;
+            padding: 0 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Banner -->
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1>🏥 Kaiser Permanente Member Experience Intelligence Platform</h1>
+                <p>Complete System Flowcharts, UML Architecture & Process Diagrams • Version 2.1.0 Production</p>
+            </div>
+            <div class="header-links">
+                <a href="docs/SYSTEM_FLOW_AND_DIAGRAMS.md" class="header-btn">📑 Markdown Specification</a>
+                <a href="docs/PROJECT_MASTER_DOCUMENTATION.md" class="header-btn">📖 Master Docs</a>
+                <a href="SETUP_AND_CONTRIBUTION_GUIDE.md" class="header-btn">💻 Setup Guide</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Shortcuts -->
+    <nav class="nav-bar">
+        <a href="#diagram-0" class="nav-btn">🌟 0. Plain English Flow</a>
+        <a href="#diagram-1" class="nav-btn">🏛️ 1. Conceptual 3-Tier</a>
+        <a href="#diagram-2" class="nav-btn">🔄 2. Pipeline Flowchart</a>
+        <a href="#diagram-3" class="nav-btn">⚡ 3. Runtime Sequence Flow</a>
+        <a href="#diagram-4" class="nav-btn">🤖 4. Agentic Decision Tree</a>
+        <a href="#diagram-5" class="nav-btn">🧩 5. UML Object Diagram</a>
+        <a href="#diagram-6" class="nav-btn">📐 6. UML Class Architecture</a>
+        <a href="#diagram-7" class="nav-btn">🗄️ 7. Star Schema ER Model</a>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- DIAGRAM 0: EASY TO UNDERSTAND PLAIN ENGLISH FLOW -->
+        <section id="diagram-0" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🌟</span>
+                    <span>0. Easy-to-Understand "Plain English" Project Flow (Executive 5-Step Storyboard)</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">Executive & Non-Technical</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-0')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Explains the <strong>entire platform flow in 30 seconds</strong>: how members connect, how AI safely evaluates risk, searches verified medical policies, verifies truthfulness, and either delivers an instant answer or connects them with a live nurse.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-0">
+flowchart LR
+    classDef step1 fill:#E0F2FE,stroke:#0284C7,stroke-width:2px,color:#0369A1;
+    classDef step2 fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#5B21B6;
+    classDef step3 fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#92400E;
+    classDef step4 fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#15803D;
+    classDef step5 fill:#FFEDD5,stroke:#EA580C,stroke-width:2px,color:#9A3412;
+
+    S1["👤 1. Member Reaches Out<br/>• Call, Chat, or Portal<br/>• Needs Rx, Care, or Claims"]:::step1
+    --> S2["🛡️ 2. AI Safety & Risk Screening<br/>• Blocks 911 Emergencies<br/>• Redacts SSN & Medical IDs<br/>• Evaluates Frustration Risk"]:::step2
+    --> S3["🔍 3. MediRAG Smart Search<br/>• Searches 10,000+ KP Policies<br/>• Consults CDC & WHO Guidelines<br/>• Finds Verified Answers"]:::step3
+    --> S4["✅ 4. Sentence Fact-Checker<br/>• Supervised NLI Model<br/>• Verifies 100% Truthfulness<br/>• Stops AI Hallucinations"]:::step4
+    --> S5["🎉 5. Perfect Experience Delivery<br/>• Fast Self-Service Answer OR<br/>• Warm Live Nurse Handoff<br/>• Saves $405K/Yr & Boosts CSAT"]:::step5
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 1: 3-TIER CONCEPTUAL ARCHITECTURE -->
+        <section id="diagram-1" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🏛️</span>
+                    <span>1. High-Level Conceptual Architecture (3-Tier Executive Overview)</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">Solution Overview</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-1')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                High-level representation showing how raw operational healthcare data is converted into predictive intelligence, delivering <strong>$405,000+ in annual operational value</strong> across member touchpoints.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-1">
+flowchart TD
+    classDef dataLayer fill:#E0F2FE,stroke:#0284C7,stroke-width:2px,color:#0369A1;
+    classDef mlLayer fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#5B21B6;
+    classDef deliveryLayer fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#15803D;
+
+    subgraph Layer1["1. INGESTION & DATA FOUNDATION LAYER"]
+        D1["Member Demographics (2,621 Members)"]
+        D2["Interaction History (10,000 Contacts)"]
+        D3["Service Operations & FCR Metrics"]
+        D4["Unstructured Call & Chat Transcripts"]
+        D5["WHO & CDC Clinical Practice Guidelines"]
+    end
+    class Layer1,D1,D2,D3,D4,D5 dataLayer;
+
+    subgraph Layer2["2. AI & PREDICTIVE ANALYTICS ENGINE"]
+        ML1["Feature Engineering (Service Friction Index)"]
+        ML2["Escalation Predictor (Balanced Logistic Reg, AUC 0.795)"]
+        ML3["Member Behavioral Personas (K-Means k=4 Clusters)"]
+        ML4["Deep Learning Sentiment (PyTorch 1D-CNN)"]
+        ML5["MediRAG Care Navigation (Hybrid BM25 + Vector RRF)"]
+        ML6["NLI Fact-Checker Verifier (DeBERTa Grounding Audit)"]
+    end
+    class Layer2,ML1,ML2,ML3,ML4,ML5,ML6 mlLayer;
+
+    subgraph Layer3["3. BUSINESS VALUE & EXPERIENCE DELIVERY LAYER"]
+        OUT1["Interactive Web Hub (Streamlit 5-Tab Cockpit)"]
+        OUT2["Neon Cloud PostgreSQL Database (Production Branch)"]
+        OUT3["Power BI Desktop Dashboards (Pages 1-6 with RLS)"]
+        OUT4["Live CRM Screen-Pop Dispatch (Epic & Salesforce)"]
+        OUT5["30% Routine Call Deflection ($405,830 Annual Savings)"]
+    end
+    class Layer3,OUT1,OUT2,OUT3,OUT4,OUT5 deliveryLayer;
+
+    Layer1 --> Layer2
+    Layer2 --> Layer3
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 2: END-TO-END PIPELINE FLOWCHART -->
+        <section id="diagram-2" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🔄</span>
+                    <span>2. End-to-End Pipeline Execution Flowchart (Phases 1–11)</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">Engineering Pipeline</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-2')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Automated technical batch sequence executed when running <code>python run_pipeline.py</code>. Covers data validation, statistical hypothesis testing, parallel ML/NLP training, Star Schema assembly, and dual database synchronization.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-2">
+flowchart TD
+    classDef startNode fill:#003B71,stroke:#001E3D,stroke-width:2px,color:#FFFFFF;
+    classDef stepNode fill:#F8FAFC,stroke:#005A9C,stroke-width:2px,color:#0F172A;
+    classDef mlNode fill:#F5F3FF,stroke:#8B5CF6,stroke-width:2px,color:#4C1D95;
+    classDef dbNode fill:#ECFDF5,stroke:#10B981,stroke-width:2px,color:#065F46;
+    classDef outNode fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#92400E;
+
+    START(["🚀 Master Execution Trigger (run_pipeline.py)"]):::startNode
+
+    P1["Phase 1: Ingest 5 Raw CSVs & Validate Referential Integrity"]:::stepNode
+    START --> P1
+
+    P2["Phase 2: Statistical Hypothesis Testing (Welch's t-test, Spearman rho, Wilson CI)"]:::stepNode
+    P3["Phase 3: Automated EDA Visual Generation (4 Figures at 300 DPI)"]:::stepNode
+    P1 --> P2
+    P1 --> P3
+
+    P4["Phase 4: Zero-Leakage Feature Engineering (Service Friction Index, Digital Adoption Score)"]:::stepNode
+    P2 --> P4
+    P3 --> P4
+
+    subgraph ParallelEngines["Parallel Modeling & NLP Engines"]
+        P5["Phase 5: Balanced Logistic Reg (Escalation Probability, AUC 0.795)"]:::mlNode
+        P6["Phase 6: K-Means Segmentation (k=4 Personas + PCA Map)"]:::mlNode
+        P7["Phase 7: PyTorch 1D-CNN (Word Embedding Sentiment)"]:::mlNode
+        P8["Phase 8: LDA Topic Modeling (5 Kaiser Complaint Themes)"]:::mlNode
+    end
+    P4 --> P5
+    P4 --> P6
+    P4 --> P7
+    P4 --> P8
+
+    P10["Phase 10: Star Schema Assembly (Fact Table + 3 Dimensions + RAG Corpus)"]:::stepNode
+    P5 --> P10
+    P6 --> P10
+    P7 --> P10
+    P8 --> P10
+
+    subgraph Persistence["Dual Database Persistence (Automated Steps 10 & 11)"]
+        DB_L["Step 10: Local SQLite Database Sync (data/kaiser_analytics.db)"]:::dbNode
+        DB_C["Step 11: Remote Neon Cloud PostgreSQL Sync (Production Branch, SSL)"]:::dbNode
+    end
+    P10 --> DB_L
+    P10 --> DB_C
+
+    UI["Interactive Web Hub (app.py)"]:::outNode
+    PBI["Power BI Desktop (DirectQuery Pages 1-6)"]:::outNode
+    RAG["Care Navigation Assistant (src/rag_engine.py)"]:::outNode
+
+    DB_L --> UI
+    DB_C --> PBI
+    DB_C --> RAG
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 3: RUNTIME SEQUENCE FLOW -->
+        <section id="diagram-3" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>⚡</span>
+                    <span>3. Runtime Member Interaction Sequence Flow Diagram</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">UML Sequence</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-3')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Millisecond-by-millisecond chronology showing how a member query passes through HIPAA scrubbing, Medical NER, Hybrid BM25/Vector RRF, grounded synthesis, NLI verification, and live CRM routing.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-3">
+sequenceDiagram
+    autonumber
+    actor Member as 👤 Member / Agent
+    participant UI as 💻 Streamlit Web Cockpit
+    participant Guard as 🛡️ HIPAA & Emergency Guard
+    participant NER as 🧬 Medical NER Processor
+    participant Engine as 🤖 CareNavigationPipeline
+    participant Retriever as 🔍 HybridCareRetriever
+    participant NLI as ⚖️ NLI Fact-Checker
+    participant CRM as 📋 CRM (Epic / Salesforce)
+
+    Member->>UI: Submit inquiry ("Can I refill Lisinopril early?")
+    UI->>Guard: Sanitize PII / Screen Acute Emergency
+    Guard-->>UI: Sanitized Text & Emergency Flag = False
+
+    UI->>Engine: Initiate query(sanitized_text, persona)
+    Engine->>NER: extract_entities(text)
+    NER-->>Engine: {DRUG: ["Lisinopril"], PROCEDURE: ["Refill"]}
+
+    Engine->>Retriever: search(query, top_k=3, bm25_weight=0.5)
+    Note over Retriever: BM25 + TF-IDF RRF (k=60)
+    Retriever-->>Engine: Return 3 Ranked Guideline Chunks
+
+    Engine->>Engine: Synthesize Grounded Clinical Response with Citations
+
+    Engine->>NLI: verify_answer(response, chunks)
+    Note over NLI: Supervised Claim-by-Claim Entailment
+    NLI-->>Engine: Report: Faithfulness = 94.2%, Contradictions = 0
+
+    alt Confident & Fact-Checked (Conf >= 0.75 & Faith >= 70%)
+        Engine-->>UI: GroundedAnswer (DEFLECTED, Citations, Pills)
+        UI-->>Member: Render Verified Instructions & Badges
+    else Low Confidence / Clinical Risk
+        Engine->>CRM: generate_screen_pop_payload(member_id, risk_prob)
+        CRM-->>Engine: Screen-Pop Ready (Ticket: KP-CRM-8831)
+        Engine-->>UI: GroundedAnswer (WARM_TRANSFER, CRM Dispatch)
+        UI-->>Member: Warm Transfer Banner & 24/7 Advice Nurse Hotline
+    end
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 4: AGENTIC CARE NAVIGATION DECISION TREE -->
+        <section id="diagram-4" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🤖</span>
+                    <span>4. Agentic Care Navigation Decision Tree (Phase 9 & MediRAG)</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">Decision Logic</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-4')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Step-by-step branching logic governing clinical safety intercepts, intent routing, hybrid search, citation enforcement, and failure auditing.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-4">
+flowchart TD
+    classDef inputNode fill:#003B71,stroke:#001E3D,stroke-width:2px,color:#FFFFFF;
+    classDef guardNode fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#991B1B;
+    classDef engineNode fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px,color:#1E40AF;
+    classDef decisionNode fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#92400E;
+    classDef successNode fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#15803D;
+    classDef transferNode fill:#FFEDD5,stroke:#EA580C,stroke-width:2px,color:#9A3412;
+
+    USER(["Member / Agent Inquiry Input"]):::inputNode
+
+    HIPAA["Step 1: HIPAA PHI Sanitizer (Regex MRN, SSN, Phone Redaction)"]:::engineNode
+    USER --> HIPAA
+
+    EM_CHECK{"Acute Emergency?<br/>(Chest pain, dyspnea, severe bleeding)"}:::guardNode
+    HIPAA --> EM_CHECK
+
+    EM_YES["🚨 Immediate Clinical Intercept: Route to 911 / Advice Nurse (1-800-464-4000)"]:::guardNode
+    EM_CHECK -- Yes --> EM_YES
+
+    INTENT["Step 2: Intent Router & Persona Telemetry (Pharmacy, Appointments, Claims)"]:::engineNode
+    EM_CHECK -- No --> INTENT
+
+    RETRIEVAL["Step 3: Hybrid Dense-Sparse Retrieval (BM25Okapi + TF-IDF Vector RRF, k=60)"]:::engineNode
+    INTENT --> RETRIEVAL
+
+    RERANK["Step 4: Supervised Policy Re-Ranking & Score Calibration"]:::engineNode
+    RETRIEVAL --> RERANK
+
+    SYNTH["Step 5: Grounded Care Synthesis with Formal Bracketed Citations"]:::engineNode
+    RERANK --> SYNTH
+
+    VERIFY["Step 6: Supervised Claim-by-Claim NLI Fact-Checker (Entailment vs Contradiction)"]:::engineNode
+    SYNTH --> VERIFY
+
+    CONF_GATE{"Confidence Score >= 0.75<br/>AND Faithfulness >= 70%?"}:::decisionNode
+    VERIFY --> CONF_GATE
+
+    DEFLECT["✅ Self-Service Deflected: Deliver Response + Policy Citations + Entity Pills"]:::successNode
+    CONF_GATE -- Yes --> DEFLECT
+
+    TRANSFER["⚠️ Warm Live Agent Transfer: Trigger Tier 2 Care Specialist Handoff"]:::transferNode
+    SCREENPOP["Generate CRM Screen-Pop (Persona Context, Risk Probability, Recommended Action)"]:::transferNode
+    CONF_GATE -- No --> TRANSFER
+    TRANSFER --> SCREENPOP
+
+    AUDIT["Persist Audit Event to failure_log.json (Retrieval Drops, Contradictions, Emergencies)"]:::engineNode
+    DEFLECT --> AUDIT
+    SCREENPOP --> AUDIT
+    EM_YES --> AUDIT
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 5: UML OBJECT DIAGRAM -->
+        <section id="diagram-5" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🧩</span>
+                    <span>5. UML Object Diagram (Runtime Instances & Memory State)</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">UML Object State</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-5')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Displays concrete software objects instantiated in memory during a live interaction for high-risk member <code>M1042</code> with specific runtime attribute values.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-5">
+classDiagram
+    class `m1042 : DimMemberEnriched` {
+        member_id = "M1042"
+        member_age = 58
+        plan_type = "Senior Advantage"
+        region = "Northern California"
+        contact_frequency = 5
+        digital_adoption_score = 0.32
+        member_escalation_rate = 0.80
+        member_segment = "High-Risk Escalate"
+    }
+
+    class `int8831 : FactInteractionsEnriched` {
+        interaction_id = "INT-8831"
+        member_id = "M1042"
+        agent_id = "A304"
+        date_key = "20261025"
+        channel = "Phone"
+        interaction_reason = "Pharmacy Refill Delay"
+        handle_duration_min = 14.2
+        first_contact_resolution = 0
+        satisfaction_score = 1
+        escalation_flag = 1
+        service_friction_index = 0.842
+        predicted_escalation_prob = 0.871
+        predicted_escalation_class = 1
+        dominant_topic = "Topic 2: Rx Denials"
+        sentiment_score = 0.18
+    }
+
+    class `ag304 : DimAgent` {
+        agent_id = "A304"
+        assigned_department = "Pharmacy Escalations"
+        queue_name = "Priority Clinical Escalation"
+        shift_type = "Morning"
+        agent_fcr_rate = 0.68
+        agent_avg_csat = 3.2
+        agent_escalation_rate = 0.28
+    }
+
+    class `dt20261025 : DimDate` {
+        date_key = "20261025"
+        year = 2026
+        quarter = 4
+        month = 10
+        month_name = "October"
+        day = 25
+        day_name = "Sunday"
+        is_weekend = 1
+    }
+
+    class `ragApp : CareNavigationRAGPipeline` {
+        confidence_threshold = 0.75
+        active_persona = "Senior Advantage"
+        hybrid_balance = 0.50
+        nli_fact_check_active = true
+    }
+
+    class `retriever : HybridCareRetriever` {
+        corpus_documents = 10002
+        bm25_k1 = 1.5
+        bm25_b = 0.75
+        rrf_k = 60
+    }
+
+    class `guideline_cdc : RetrievedChunk` {
+        chunk_id = "CDC-Rx-Refill-204"
+        department = "Pharmacy"
+        source = "CDC Clinical Practice Guidelines"
+        title = "Early Medication Refill Maintenance Protocol"
+        score = 0.884
+        rrf_rank = 1
+    }
+
+    class `verifier : NLIClaimVerifier` {
+        entailment_threshold = 0.50
+        contradiction_threshold = 0.65
+        claims_evaluated = 3
+        entailed_claims = 3
+        contradicted_claims = 0
+        faithfulness_score = 0.942
+    }
+
+    class `crmPop : CRMScreenPop` {
+        ticket_id = "CRM-KP-8831"
+        urgency = "CRITICAL"
+        recommended_action = "Approve 30-day bridge refill & waive late penalty"
+        target_queue = "Tier 2 Clinical Pharmacist"
+    }
+
+    `m1042 : DimMemberEnriched` "1" -- "0..*" `int8831 : FactInteractionsEnriched` : conducts
+    `ag304 : DimAgent` "1" -- "0..*" `int8831 : FactInteractionsEnriched` : handles
+    `dt20261025 : DimDate` "1" -- "0..*" `int8831 : FactInteractionsEnriched` : timestamps
+    `ragApp : CareNavigationRAGPipeline` --> `retriever : HybridCareRetriever` : utilizes
+    `retriever : HybridCareRetriever` --> `guideline_cdc : RetrievedChunk` : retrieves
+    `ragApp : CareNavigationRAGPipeline` --> `verifier : NLIClaimVerifier` : verifies via
+    `ragApp : CareNavigationRAGPipeline` --> `crmPop : CRMScreenPop` : dispatches
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 6: UML CLASS & SOFTWARE ARCHITECTURE -->
+        <section id="diagram-6" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>📐</span>
+                    <span>6. UML Class & Software Architecture Diagram</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">UML Class Model</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-6')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Object-oriented software architecture showing classes, attributes, methods, types, and composition across the Python packages.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-6">
+classDiagram
+    class CareNavigationRAGPipeline {
+        +float CONFIDENCE_THRESHOLD = 0.75
+        +List PRESET_BENCHMARKS
+        +HybridCareRetriever retriever
+        +FailureModeLogger failure_logger
+        +MedicalNERProcessor ner_processor
+        +NLIClaimVerifier nli_verifier
+        +classify_intent(query: str) QueryIntent
+        +query(user_query: str, persona: str, top_k: int) GroundedAnswer
+        -_synthesize_grounded_answer(query, intent, chunks) Tuple
+        -_synthesize_fallback_answer(query, intent, chunks) Tuple
+    }
+
+    class HybridCareRetriever {
+        +Path corpus_path
+        +DataFrame df
+        +BM25Okapi bm25
+        +TfidfVectorizer vectorizer
+        +load_and_index() void
+        +add_guideline(title: str, dept: str, text: str) RetrievedChunk
+        +search(query: str, top_k: int, bm25_weight: float) List~RetrievedChunk~
+        -_reciprocal_rank_fusion(bm25_ranks, vector_ranks, k: int) List
+    }
+
+    class NLIClaimVerifier {
+        +float ENTAILMENT_THRESHOLD = 0.50
+        +float CONTRADICTION_THRESHOLD = 0.65
+        +split_into_claims(text: str) List~str~
+        +verify_answer(answer: str, chunks: List) VerificationReport
+    }
+
+    class MedicalNERProcessor {
+        +Set DRUG_KEYWORDS
+        +Set DISEASE_KEYWORDS
+        +Pattern DOSAGE_PATTERN
+        +Set PROCEDURE_KEYWORDS
+        +extract_entities(text: str) Dict~str, List~
+    }
+
+    class HIPAAGuardrail {
+        +Pattern MRN_PATTERN
+        +Pattern SSN_PATTERN
+        +Pattern PHONE_PATTERN
+        +List EMERGENCY_KEYWORDS
+        +sanitize(text: str) Tuple~str, bool~
+        +check_emergency(text: str) bool
+    }
+
+    class FailureModeLogger {
+        +Path log_file
+        +List~FailureRecord~ failures
+        +load_existing() void
+        +log(type: str, subtype: str, query: str, details: str) FailureRecord
+        +save() void
+    }
+
+    class DatabaseSyncManager {
+        +str db_url
+        +Engine engine
+        +sync_star_schema_to_db() Dict
+        +query_table(table_name: str, limit: int) DataFrame
+        +get_table_counts() Dict
+    }
+
+    class CloudDatabaseUploader {
+        +str database_url
+        +Engine engine
+        +upload_star_schema(data_dir: Path) Dict
+        +create_analytical_indexes() void
+    }
+
+    CareNavigationRAGPipeline *-- HybridCareRetriever : owns
+    CareNavigationRAGPipeline *-- NLIClaimVerifier : owns
+    CareNavigationRAGPipeline *-- HIPAAGuardrail : owns
+    CareNavigationRAGPipeline *-- MedicalNERProcessor : owns
+    CareNavigationRAGPipeline *-- FailureModeLogger : owns
+    DatabaseSyncManager <|-- CloudDatabaseUploader : inherits
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAGRAM 7: STAR SCHEMA ER DATA MODEL -->
+        <section id="diagram-7" class="diagram-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🗄️</span>
+                    <span>7. Star Schema Entity-Relationship (ER) Data Model</span>
+                </div>
+                <div class="card-actions">
+                    <span class="card-badge">Database Model</span>
+                    <button class="copy-btn" onclick="copyMermaid('code-7')">📋 Copy Mermaid Code</button>
+                </div>
+            </div>
+            <p class="card-desc">
+                Star Schema relational tables deployed in Neon Cloud PostgreSQL and SQLite with primary keys, foreign keys, and 1-to-many relationships for Power BI DirectQuery.
+            </p>
+            <div class="diagram-canvas">
+                <div class="mermaid" id="code-7">
+erDiagram
+    FACT_INTERACTIONS_ENRICHED {
+        string interaction_id PK
+        string member_id FK
+        string agent_id FK
+        string date_key FK
+        string channel
+        string interaction_reason
+        float handle_duration_min
+        int first_contact_resolution
+        int satisfaction_score
+        int escalation_flag
+        float service_friction_index
+        float predicted_escalation_prob
+        int predicted_escalation_class
+        string dominant_topic
+        float sentiment_score
+    }
+
+    DIM_MEMBER_ENRICHED {
+        string member_id PK
+        int member_age
+        string plan_type
+        string region
+        int contact_frequency
+        float digital_adoption_score
+        float member_escalation_rate
+        string member_segment
+    }
+
+    DIM_AGENT {
+        string agent_id PK
+        string assigned_department
+        string queue_name
+        string shift_type
+        float agent_fcr_rate
+        float agent_avg_csat
+        float agent_escalation_rate
+    }
+
+    DIM_DATE {
+        string date_key PK
+        int year
+        int quarter
+        int month
+        string month_name
+        int day
+        string day_name
+        int is_weekend
+    }
+
+    RAG_CORPUS_STAGING {
+        string interaction_id PK
+        string cleaned_transcript
+        string topic
+        string channel
+        string department
+        float sentiment_score
+        int escalation_flag
+    }
+
+    DIM_MEMBER_ENRICHED ||--o{ FACT_INTERACTIONS_ENRICHED : "1 to many (member_id)"
+    DIM_AGENT ||--o{ FACT_INTERACTIONS_ENRICHED : "1 to many (agent_id)"
+    DIM_DATE ||--o{ FACT_INTERACTIONS_ENRICHED : "1 to many (date_key)"
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification for Mermaid Copy -->
+    <div id="toast">✅ Mermaid diagram code copied to clipboard! Ready to paste into Mermaid AI or mermaid.live.</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Kaiser Permanente Contact Center Analytics & Clinical Care Navigation Platform • Capstone Project 3</p>
+        <p style="margin-top: 6px;">Created for Executive Stakeholder Presentations & Technical Architecture Reviews</p>
+    </footer>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            securityLevel: 'loose'
+        });
+
+        // Copy Mermaid Code Handler
+        function copyMermaid(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const code = el.textContent.trim();
+            navigator.clipboard.writeText(code).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error("Clipboard copy failed: ", err);
+            });
+        }
+
+        // Show Toast Notification
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
