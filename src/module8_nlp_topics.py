@@ -19,8 +19,13 @@ if str(PROJECT_ROOT) not in sys.path:
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 from src.config import RANDOM_STATE, MODELS_DIR, REPORTS_DIR, FIGURES_DIR, NLP_THEMES
 
 # Domain stop words and dialogue conversational fillers
@@ -210,6 +215,98 @@ def plot_topic_distributions(df: pd.DataFrame):
     print(f"  [FIGURE SAVED] {output_path.name}")
 
 
+def map_reason_to_theme(reason: str) -> str:
+    """Maps granular interaction reasons to 5 core Kaiser complaint themes."""
+    r = str(reason).lower()
+    if "appointment" in r or "schedule" in r:
+        return "Appointments"
+    elif "billing" in r or "payment" in r or "copay" in r:
+        return "Billing"
+    elif "claim" in r or "reimbursement" in r or "appeal" in r:
+        return "Claims"
+    elif "pharmacy" in r or "prescription" in r or "refill" in r or "medication" in r:
+        return "Pharmacy"
+    else:
+        return "Provider Access"
+
+
+def train_complaint_classifier(df: pd.DataFrame) -> tuple:
+    """
+    Trains a supervised NLP Complaint Classifier mapping member dialogue and feedback
+    to 5 Kaiser operational themes (Appointments, Billing, Claims, Pharmacy, Provider Access).
+    Exports performance metrics, artifact model, and confusion matrix plot.
+    """
+    print("\n  [COMPLAINT CLASSIFIER] Training supervised TF-IDF + Logistic Regression text classifier...")
+    
+    y = df["Interaction_Reason"].apply(map_reason_to_theme)
+    X_text = df["Cleaned_Transcript"]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_text, y, test_size=0.20, random_state=RANDOM_STATE, stratify=y
+    )
+
+    pipeline = Pipeline([
+        ("tfidf", TfidfVectorizer(max_features=2500, ngram_range=(1, 2))),
+        ("clf", LogisticRegression(class_weight="balanced", max_iter=500, random_state=RANDOM_STATE))
+    ])
+
+    pipeline.fit(X_train, y_train)
+
+    y_pred = pipeline.predict(X_test)
+
+    acc = accuracy_score(y_test, y_pred)
+    f1_macro = f1_score(y_test, y_pred, average="macro")
+    f1_weighted = f1_score(y_test, y_pred, average="weighted")
+    report = classification_report(y_test, y_pred, output_dict=True)
+
+    print(f"    * Complaint Classification Accuracy: {acc:.4f} | F1 Macro: {f1_macro:.4f} | F1 Weighted: {f1_weighted:.4f}")
+
+    # Plot Confusion Matrix
+    labels = sorted(y.unique())
+    cm = confusion_matrix(y_test, y_pred, labels=labels)
+
+    plt.figure(figsize=(9, 7))
+    sns.heatmap(
+        cm, annot=True, fmt="d", cmap="Blues",
+        xticklabels=labels, yticklabels=labels,
+        linewidths=0.8, linecolor="white"
+    )
+    plt.title(f"Kaiser Permanente Complaint Classification Confusion Matrix\nAccuracy: {acc*100:.1f}% | Macro F1: {f1_macro:.3f}", fontsize=12, fontweight="bold", pad=14)
+    plt.xlabel("Predicted Complaint Theme", fontsize=11, fontweight="bold")
+    plt.ylabel("Ground-Truth Complaint Category", fontsize=11, fontweight="bold")
+    plt.tight_layout()
+
+    cm_path = FIGURES_DIR / "complaint_classification_confusion_matrix.png"
+    plt.savefig(cm_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  [FIGURE SAVED] {cm_path.name}")
+
+    # Save Model Artifact
+    clf_path = MODELS_DIR / "complaint_classifier.pkl"
+    joblib.dump(pipeline, clf_path)
+    print(f"  [MODEL EXPORT] Saved Complaint Classifier artifact to: {clf_path}")
+
+    # Export Report
+    clf_report = {
+        "accuracy": round(float(acc), 4),
+        "f1_macro": round(float(f1_macro), 4),
+        "f1_weighted": round(float(f1_weighted), 4),
+        "classification_report": report,
+        "classes": labels
+    }
+    report_file = REPORTS_DIR / "complaint_classification_report.json"
+    with open(report_file, "w", encoding="utf-8") as f:
+        json.dump(clf_report, f, indent=4)
+    print(f"  [REPORT SAVED] Exported complaint classification report to: {report_file}")
+
+    # Predict across entire dataset
+    df["Predicted_Complaint_Category"] = pipeline.predict(X_text)
+    probs_all = pipeline.predict_proba(X_text)
+    df["Complaint_Confidence"] = np.round(np.max(probs_all, axis=1), 4)
+
+    return pipeline, clf_report
+
+
 def run_module8(df: pd.DataFrame) -> tuple:
     """Execution entry point for Module 8."""
     print("\n>>> EXECUTING MODULE 8: NLP TOPIC MODELING & COMPLAINT CLASSIFICATION <<<")
@@ -246,12 +343,16 @@ def run_module8(df: pd.DataFrame) -> tuple:
     # 3. Topic Visualizations
     plot_topic_distributions(df)
 
-    # 4. Save Model Artifacts
+    # 4. Supervised Complaint Classifier
+    complaint_clf, complaint_report = train_complaint_classifier(df)
+
+    # 5. Save Model Artifacts
     nlp_artifacts = {
         "lda_model": lda,
         "vectorizer": vectorizer,
         "assigned_theme_names": assigned_theme_names,
-        "topic_keywords": topic_keywords
+        "topic_keywords": topic_keywords,
+        "complaint_classifier": complaint_clf
     }
     model_path = MODELS_DIR / "lda_topic_model.pkl"
     joblib.dump(nlp_artifacts, model_path)
@@ -266,12 +367,13 @@ def run_module8(df: pd.DataFrame) -> tuple:
             }
             for idx, words in topic_keywords.items()
         },
-        "high_friction_keywords": high_friction_terms
+        "high_friction_keywords": high_friction_terms,
+        "complaint_classification": complaint_report
     }
     report_path = REPORTS_DIR / "nlp_topic_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(nlp_report, f, indent=4)
-    print(f"  [REPORT SAVED] Exported NLP topic report to: {report_path}")
+    print(f"  [REPORT SAVED] Exported NLP topic & complaint report to: {report_path}")
 
     return df, nlp_artifacts, nlp_report
 

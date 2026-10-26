@@ -69,5 +69,11 @@
     "pca_explained_variance_ratio": [
         0.3148,
         0.1875
-    ]
+    ],
+    "hierarchical_clustering": {
+        "method": "ward",
+        "cophenetic_correlation": 0.3566,
+        "silhouette_score": 0.1306,
+        "adjusted_rand_index_vs_kmeans": 0.2408
+    }
 }

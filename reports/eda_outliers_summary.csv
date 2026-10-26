@@ -1,0 +1,4 @@
+Metric,Q1_25Pct,Median,Q3_75Pct,IQR,Lower_Fence,Upper_Fence,Outlier_Count,Outlier_Pct
+Resolution_Time,9.72,14.81,22.42,12.7,-9.33,41.47,484,4.84
+Total_Contacts,1.0,1.0,2.0,1.0,-0.5,3.5,1065,10.65
+Age,37.0,48.0,59.0,22.0,4.0,92.0,0,0.0

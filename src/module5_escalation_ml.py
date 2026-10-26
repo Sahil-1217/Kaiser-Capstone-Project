@@ -25,11 +25,13 @@ from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
 from sklearn.metrics import (
     roc_auc_score, average_precision_score, classification_report,
-    roc_curve, precision_recall_curve, brier_score_loss, confusion_matrix
+    roc_curve, precision_recall_curve, brier_score_loss, confusion_matrix,
+    accuracy_score
 )
 from src.config import RANDOM_STATE, MODELS_DIR, REPORTS_DIR, FIGURES_DIR
 
@@ -118,6 +120,12 @@ def train_and_evaluate_models(X: pd.DataFrame, y: pd.Series):
             max_iter=1000,
             random_state=RANDOM_STATE
         ),
+        "Decision_Tree": DecisionTreeClassifier(
+            max_depth=6,
+            min_samples_split=20,
+            class_weight="balanced",
+            random_state=RANDOM_STATE
+        ),
         "Random_Forest": RandomForestClassifier(
             n_estimators=150,
             max_depth=8,
@@ -145,7 +153,7 @@ def train_and_evaluate_models(X: pd.DataFrame, y: pd.Series):
         ])
 
         # 5-Fold CV on Train set
-        scoring = ["roc_auc", "average_precision", "f1", "precision", "recall"]
+        scoring = ["roc_auc", "average_precision", "f1", "precision", "recall", "accuracy"]
         cv_scores = cross_validate(pipe, X_train, y_train, cv=cv, scoring=scoring, n_jobs=-1)
 
         # Fit on full training set
@@ -156,6 +164,7 @@ def train_and_evaluate_models(X: pd.DataFrame, y: pd.Series):
         y_pred = pipe.predict(X_test)
         y_prob = pipe.predict_proba(X_test)[:, 1]
 
+        acc = accuracy_score(y_test, y_pred)
         roc_auc = roc_auc_score(y_test, y_prob)
         pr_auc = average_precision_score(y_test, y_prob)
         brier = brier_score_loss(y_test, y_prob)
@@ -163,10 +172,12 @@ def train_and_evaluate_models(X: pd.DataFrame, y: pd.Series):
         cm = confusion_matrix(y_test, y_pred).tolist()
 
         model_results[name] = {
+            "cv_mean_accuracy": round(float(np.mean(cv_scores["test_accuracy"])), 4),
             "cv_mean_roc_auc": round(float(np.mean(cv_scores["test_roc_auc"])), 4),
             "cv_std_roc_auc": round(float(np.std(cv_scores["test_roc_auc"])), 4),
             "cv_mean_pr_auc": round(float(np.mean(cv_scores["test_average_precision"])), 4),
             "cv_mean_f1": round(float(np.mean(cv_scores["test_f1"])), 4),
+            "test_accuracy": round(float(acc), 4),
             "test_roc_auc": round(float(roc_auc), 4),
             "test_pr_auc": round(float(pr_auc), 4),
             "test_brier_score": round(float(brier), 4),
@@ -177,7 +188,8 @@ def train_and_evaluate_models(X: pd.DataFrame, y: pd.Series):
             "y_prob_test": y_prob
         }
 
-        print(f"    * 5-Fold CV ROC-AUC: {model_results[name]['cv_mean_roc_auc']} (+/- {model_results[name]['cv_std_roc_auc']})")
+        print(f"    * 5-Fold CV Accuracy: {model_results[name]['cv_mean_accuracy']} | ROC-AUC: {model_results[name]['cv_mean_roc_auc']} (+/- {model_results[name]['cv_std_roc_auc']})")
+        print(f"    * Test Accuracy:     {model_results[name]['test_accuracy']}")
         print(f"    * Test ROC-AUC:      {model_results[name]['test_roc_auc']}")
         print(f"    * Test PR-AUC:       {model_results[name]['test_pr_auc']}")
         print(f"    * Test Recall (Esc): {model_results[name]['test_recall_pos']}")
@@ -214,7 +226,12 @@ def plot_evaluation_curves(model_results: dict, y_test: pd.Series):
     """Generates comparative ROC and Precision-Recall Curves."""
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
 
-    colors = {"Logistic_Regression": "#2ca02c", "Random_Forest": "#1f77b4", "Gradient_Boosting": "#ff7f0e"}
+    colors = {
+        "Logistic_Regression": "#2ca02c",
+        "Decision_Tree": "#9467bd",
+        "Random_Forest": "#1f77b4",
+        "Gradient_Boosting": "#ff7f0e"
+    }
 
     # 1. ROC Curves
     for name, res in model_results.items():

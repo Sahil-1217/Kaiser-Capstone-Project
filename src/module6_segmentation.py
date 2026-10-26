@@ -20,9 +20,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.decomposition import PCA
-from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
+from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score, adjusted_rand_score
+from scipy.cluster.hierarchy import linkage, dendrogram, cophenet
+from scipy.spatial.distance import pdist
 from src.config import RANDOM_STATE, MODELS_DIR, REPORTS_DIR, FIGURES_DIR
 
 
@@ -98,6 +100,54 @@ def assign_persona_labels(cluster_centers_df: pd.DataFrame) -> dict:
     return persona_map
 
 
+def perform_hierarchical_clustering(X_scaled: np.ndarray, n_clusters: int = 4) -> dict:
+    """
+    Executes Agglomerative Hierarchical Clustering using Ward's minimum variance criterion.
+    Computes the cophenetic correlation coefficient and generates a publication-grade dendrogram.
+    """
+    print("\n  [HIERARCHICAL CLUSTERING] Computing linkage matrix and dendrogram (Ward method)...")
+    # Linkage matrix using Ward criterion
+    Z = linkage(X_scaled, method="ward")
+    coph_corr, _ = cophenet(Z, pdist(X_scaled))
+    print(f"    * Cophenetic Correlation Coefficient: {coph_corr:.4f}")
+
+    # Agglomerative clustering fit
+    agg = AgglomerativeClustering(n_clusters=n_clusters, linkage="ward")
+    labels = agg.fit_predict(X_scaled)
+    sil = silhouette_score(X_scaled, labels)
+    print(f"    * Hierarchical Silhouette Score ({n_clusters} clusters): {sil:.4f}")
+
+    # Plot publication Dendrogram
+    plt.figure(figsize=(12, 6))
+    dendrogram(
+        Z,
+        truncate_mode="lastp",
+        p=30,
+        leaf_rotation=45.,
+        leaf_font_size=9.,
+        show_contracted=True,
+        color_threshold=Z[-(n_clusters - 1), 2]  # Color boundary for n_clusters
+    )
+    plt.title(f"Kaiser Permanente Member Hierarchical Clustering Dendrogram (Ward Linkage)\nCophenetic Correlation = {coph_corr:.4f}", fontsize=13, fontweight="bold", pad=14)
+    plt.xlabel("Cluster Group / Leaf Index (Sample Size)", fontsize=11, fontweight="bold")
+    plt.ylabel("Ward Euclidean Linkage Distance", fontsize=11, fontweight="bold")
+    plt.axhline(y=Z[-(n_clusters - 1), 2], color="#d62728", linestyle="--", linewidth=1.5, label=f"Optimal Cutoff ({n_clusters} Clusters)")
+    plt.legend(loc="upper right", frameon=True)
+    plt.tight_layout()
+
+    dendro_path = FIGURES_DIR / "hierarchical_dendrogram.png"
+    plt.savefig(dendro_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  [FIGURE SAVED] {dendro_path.name}")
+
+    return {
+        "cluster_labels": labels,
+        "cophenetic_correlation": round(float(coph_corr), 4),
+        "silhouette_score": round(float(sil), 4),
+        "linkage_matrix": Z
+    }
+
+
 def perform_segmentation(df_member: pd.DataFrame, n_clusters: int = 4):
     """
     Executes StandardScaler, K-Means clustering, PCA visualization, and profiling.
@@ -137,6 +187,15 @@ def perform_segmentation(df_member: pd.DataFrame, n_clusters: int = 4):
         print(f"  Cluster {cid} -> '{persona}': {c_size} members ({c_pct:.1f}%)")
         print(f"      Age: {c_stats['Age']:.1f} | Digital: {c_stats['Digital_Adoption_Score']*100:.1f}% | Friction: {c_stats['Avg_Service_Friction']:.3f} | Esc Rate: {c_stats['Member_Escalation_Rate']*100:.1f}%")
 
+    # Hierarchical (Agglomerative) Clustering & Dendrogram
+    hierarchical_metrics = perform_hierarchical_clustering(X_scaled, n_clusters=n_clusters)
+    df_member["Hierarchical_Cluster_ID"] = hierarchical_metrics["cluster_labels"]
+
+    # Compute agreement between K-Means and Hierarchical Clustering
+    ari = adjusted_rand_score(cluster_labels, hierarchical_metrics["cluster_labels"])
+    hierarchical_metrics["adjusted_rand_index_vs_kmeans"] = round(float(ari), 4)
+    print(f"  [HIERARCHICAL AGREEMENT] Adjusted Rand Index (K-Means vs Hierarchical): {ari:.4f}")
+
     # PCA 2-Component Visualization
     pca = PCA(n_components=2, random_state=RANDOM_STATE)
     X_pca = pca.fit_transform(X_scaled)
@@ -152,11 +211,12 @@ def perform_segmentation(df_member: pd.DataFrame, n_clusters: int = 4):
         "scaler": scaler,
         "features": features,
         "persona_mapping": persona_mapping,
-        "pca": pca
+        "pca": pca,
+        "hierarchical_metrics": hierarchical_metrics
     }
     model_path = MODELS_DIR / "kmeans_segmentation.pkl"
     joblib.dump(segmentation_artifacts, model_path)
-    print(f"  [MODEL EXPORT] Saved KMeans segmentation artifact to: {model_path}")
+    print(f"  [MODEL EXPORT] Saved KMeans & Hierarchical segmentation artifacts to: {model_path}")
 
     # Export Segmentation Report
     seg_report = {
@@ -164,7 +224,13 @@ def perform_segmentation(df_member: pd.DataFrame, n_clusters: int = 4):
         "cluster_evaluations": cluster_scores,
         "cluster_centers": centers_df.to_dict(orient="index"),
         "persona_mapping": {str(k): v for k, v in persona_mapping.items()},
-        "pca_explained_variance_ratio": [round(float(v), 4) for v in var_exp]
+        "pca_explained_variance_ratio": [round(float(v), 4) for v in var_exp],
+        "hierarchical_clustering": {
+            "method": "ward",
+            "cophenetic_correlation": hierarchical_metrics["cophenetic_correlation"],
+            "silhouette_score": hierarchical_metrics["silhouette_score"],
+            "adjusted_rand_index_vs_kmeans": hierarchical_metrics["adjusted_rand_index_vs_kmeans"]
+        }
     }
     report_path = REPORTS_DIR / "segmentation_report.json"
     with open(report_path, "w", encoding="utf-8") as f:

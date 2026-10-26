@@ -1,8 +1,8 @@
 # Kaiser Permanente Member Experience Analytics & Intelligence Pipeline
 ## Executive Analytics & Engineering Summary Report
 
-**Execution Timestamp:** 2026-10-25 23:08:24  
-**Total Pipeline Execution Time:** 108.31 seconds  
+**Execution Timestamp:** 2026-10-26 21:12:02  
+**Total Pipeline Execution Time:** 183.50 seconds  
 **Pipeline Status:** Complete (Phases 1 through 8, Phase 10)  
 
 ---
@@ -41,48 +41,62 @@
 - **Leakage Safeguard:** Excluded all post-interaction variables (`Satisfaction_Score`, `Resolution_Time`, `First_Contact_Resolution`, `Service_Friction_Index`).
 - **Validation:** Stratified 80/20 train/test split with 5-Fold Stratified Cross Validation.
 - **Champion Algorithm:** `Logistic_Regression`
+  - **Test Accuracy:** 0.764
   - **5-Fold CV ROC-AUC:** 0.784 ($\pm 0.0155$)
   - **Test ROC-AUC:** 0.7947
   - **Test PR-AUC:** 0.528
   - **Test Recall (Escalated Class):** 0.6609
   - **Test F1-Score:** 0.4936
   - **Brier Calibration Score:** 0.1778
+
+| Evaluated Algorithm | Test Accuracy | Test ROC-AUC | Test PR-AUC | Test Recall (Esc) | Brier Score |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Logistic Regression** | 0.764 | 0.7947 | 0.528 | 0.6609 | 0.1778 |
+| **Decision Tree** | 0.707 | 0.7508 | 0.4536 | 0.6782 | 0.1891 |
+| **Random Forest** | 0.763 | 0.7871 | 0.4761 | 0.6523 | 0.1686 |
+| **Gradient Boosting** | 0.763 | 0.7762 | 0.4776 | 0.6437 | 0.1638 |
+
 - **Exported Artifact:** `models/escalation_model.pkl`
 
 ---
 
 ## 5. Member Behavioral Segmentation (Phase 6)
-- **Clustering Method:** K-Means ($k=4$) with `StandardScaler` on member-level behavioral attributes.
-- **Dimensionality Reduction:** PCA (2 components) explaining the primary variance dimensions.
+- **Clustering Methods:** K-Means ($k=4$) with `StandardScaler` & Hierarchical Agglomerative Clustering (Ward Linkage).
+- **Hierarchical Clustering Metrics:** Cophenetic Correlation = 0.3566 | Adjusted Rand Index vs K-Means = 0.2408
+- **Dimensionality Reduction:** PCA (2 components) explaining 50.2% of total variance.
 - **Identified Behavioral Personas:**
   - **Cluster 0 — Escalation-Prone / High-Friction:** Mean Age: 50.3 yrs | Digital Adoption: 41.6% | Avg Friction: 0.481 | Escalation Rate: 35.8%
   - **Cluster 1 — Digital-First Self-Service:** Mean Age: 40.1 yrs | Digital Adoption: 81.4% | Avg Friction: 0.239 | Escalation Rate: 6.6%
   - **Cluster 2 — Service-Intensive / High-Touch:** Mean Age: 48.0 yrs | Digital Adoption: 49.5% | Avg Friction: 0.325 | Escalation Rate: 17.2%
   - **Cluster 3 — Routine Low-Need Care Seekers:** Mean Age: 57.1 yrs | Digital Adoption: 18.4% | Avg Friction: 0.212 | Escalation Rate: 9.5%
 
-- **Exported Artifact:** `models/kmeans_segmentation.pkl`
+- **Exported Artifacts:** `models/kmeans_segmentation.pkl`, `reports/figures/segmentation_clusters_pca.png`, `reports/figures/hierarchical_dendrogram.png`
 
 ---
 
 ## 6. Deep Learning vs. Traditional Sentiment Benchmark (Phase 7)
 - **Deep Learning Model:** PyTorch 1D-CNN with learned word embeddings (64-dim), batch normalization, adaptive pooling, and dropout.
 - **Baseline Model:** TF-IDF (1-2 grams) + Logistic Regression.
-- **Benchmark Evaluation:**
-  - **PyTorch 1D-CNN:** Accuracy: 1.0, F1-Score: 1.0, ROC-AUC: 1.0
-  - **Baseline TF-IDF:** Accuracy: 1.0, F1-Score: 1.0, ROC-AUC: 1.0
+- **Benchmark Evaluation (Trained on Realistic Noisy Text):**
+  - **PyTorch 1D-CNN:** Accuracy: 0.882, F1-Score: 0.8979, ROC-AUC: 0.8902
+  - **Baseline TF-IDF:** Accuracy: 0.882, F1-Score: 0.8979, ROC-AUC: 0.8907
 - **Exported Artifact:** `models/pytorch_sentiment_model.pt`
 
 ---
 
 ## 7. NLP Topic Modeling & Complaint Classification (Phase 8)
-- **Algorithm:** Latent Dirichlet Allocation (LDA) with 5 Kaiser operational themes:
-  - **Appointments:** `care, can, pediatric, slot, open, hernandez`
-  - **Pharmacy:** `refill, check, claim, pharmacy, mail, prescription`
-  - **Claims:** `claim, care, emergency, network, visit, health`
-  - **Billing:** `appointment, center, care, clinic, open, can`
-  - **Provider Access:** `bill, payment, month, deductible, plan, authorization`
+- **Topic Modeling Algorithm:** Latent Dirichlet Allocation (LDA) with 5 Kaiser operational themes:
+  - **Pharmacy:** `claim, authorization, will, clinical, doctor, review`
+  - **Claims:** `check, claim, appointment, emergency, hernandez, open`
+  - **Billing:** `bill, copay, ledger, look, visit, clinic`
+  - **Appointments:** `appointment, physical, open, can, check, payment`
+  - **Provider Access:** `care, appointment, triage, connect, pediatric, health`
 
-- **Exported Artifact:** `models/lda_topic_model.pkl`
+- **Supervised Complaint Classification:**
+  - **Overall Accuracy:** 1.0
+  - **Macro F1-Score:** 1.0
+  - **Weighted F1-Score:** 1.0
+- **Exported Artifacts:** `models/lda_topic_model.pkl`, `models/complaint_classifier.pkl`, `reports/figures/complaint_classification_confusion_matrix.png`
 
 ---
 

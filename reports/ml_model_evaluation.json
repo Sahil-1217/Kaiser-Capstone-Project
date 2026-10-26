@@ -1,9 +1,11 @@
 {
     "Logistic_Regression": {
+        "cv_mean_accuracy": 0.752,
         "cv_mean_roc_auc": 0.784,
         "cv_std_roc_auc": 0.0155,
         "cv_mean_pr_auc": 0.4986,
         "cv_mean_f1": 0.4739,
+        "test_accuracy": 0.764,
         "test_roc_auc": 0.7947,
         "test_pr_auc": 0.528,
         "test_brier_score": 0.1778,
@@ -21,11 +23,37 @@
             ]
         ]
     },
+    "Decision_Tree": {
+        "cv_mean_accuracy": 0.713,
+        "cv_mean_roc_auc": 0.7612,
+        "cv_std_roc_auc": 0.014,
+        "cv_mean_pr_auc": 0.4549,
+        "cv_mean_f1": 0.4513,
+        "test_accuracy": 0.707,
+        "test_roc_auc": 0.7508,
+        "test_pr_auc": 0.4536,
+        "test_brier_score": 0.1891,
+        "test_precision_pos": 0.3324,
+        "test_recall_pos": 0.6782,
+        "test_f1_pos": 0.4461,
+        "confusion_matrix": [
+            [
+                1178,
+                474
+            ],
+            [
+                112,
+                236
+            ]
+        ]
+    },
     "Random_Forest": {
+        "cv_mean_accuracy": 0.7635,
         "cv_mean_roc_auc": 0.7705,
         "cv_std_roc_auc": 0.0159,
         "cv_mean_pr_auc": 0.4475,
         "cv_mean_f1": 0.4697,
+        "test_accuracy": 0.763,
         "test_roc_auc": 0.7871,
         "test_pr_auc": 0.4761,
         "test_brier_score": 0.1686,
@@ -44,10 +72,12 @@
         ]
     },
     "Gradient_Boosting": {
+        "cv_mean_accuracy": 0.7537,
         "cv_mean_roc_auc": 0.7579,
         "cv_std_roc_auc": 0.0124,
         "cv_mean_pr_auc": 0.4517,
         "cv_mean_f1": 0.4502,
+        "test_accuracy": 0.763,
         "test_roc_auc": 0.7762,
         "test_pr_auc": 0.4776,
         "test_brier_score": 0.1638,

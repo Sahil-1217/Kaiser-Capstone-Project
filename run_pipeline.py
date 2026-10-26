@@ -109,19 +109,29 @@ def generate_pipeline_summary_report(
 - **Leakage Safeguard:** Excluded all post-interaction variables (`Satisfaction_Score`, `Resolution_Time`, `First_Contact_Resolution`, `Service_Friction_Index`).
 - **Validation:** Stratified 80/20 train/test split with 5-Fold Stratified Cross Validation.
 - **Champion Algorithm:** `{champ}`
+  - **Test Accuracy:** {champ_eval.get('test_accuracy', 'N/A')}
   - **5-Fold CV ROC-AUC:** {champ_eval.get('cv_mean_roc_auc', 'N/A')} ($\\pm {champ_eval.get('cv_std_roc_auc', 'N/A')}$)
   - **Test ROC-AUC:** {champ_eval.get('test_roc_auc', 'N/A')}
   - **Test PR-AUC:** {champ_eval.get('test_pr_auc', 'N/A')}
   - **Test Recall (Escalated Class):** {champ_eval.get('test_recall_pos', 'N/A')}
   - **Test F1-Score:** {champ_eval.get('test_f1_pos', 'N/A')}
   - **Brier Calibration Score:** {champ_eval.get('test_brier_score', 'N/A')}
+
+| Evaluated Algorithm | Test Accuracy | Test ROC-AUC | Test PR-AUC | Test Recall (Esc) | Brier Score |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Logistic Regression** | {ml_metrics.get('Logistic_Regression', {}).get('test_accuracy', 'N/A')} | {ml_metrics.get('Logistic_Regression', {}).get('test_roc_auc', 'N/A')} | {ml_metrics.get('Logistic_Regression', {}).get('test_pr_auc', 'N/A')} | {ml_metrics.get('Logistic_Regression', {}).get('test_recall_pos', 'N/A')} | {ml_metrics.get('Logistic_Regression', {}).get('test_brier_score', 'N/A')} |
+| **Decision Tree** | {ml_metrics.get('Decision_Tree', {}).get('test_accuracy', 'N/A')} | {ml_metrics.get('Decision_Tree', {}).get('test_roc_auc', 'N/A')} | {ml_metrics.get('Decision_Tree', {}).get('test_pr_auc', 'N/A')} | {ml_metrics.get('Decision_Tree', {}).get('test_recall_pos', 'N/A')} | {ml_metrics.get('Decision_Tree', {}).get('test_brier_score', 'N/A')} |
+| **Random Forest** | {ml_metrics.get('Random_Forest', {}).get('test_accuracy', 'N/A')} | {ml_metrics.get('Random_Forest', {}).get('test_roc_auc', 'N/A')} | {ml_metrics.get('Random_Forest', {}).get('test_pr_auc', 'N/A')} | {ml_metrics.get('Random_Forest', {}).get('test_recall_pos', 'N/A')} | {ml_metrics.get('Random_Forest', {}).get('test_brier_score', 'N/A')} |
+| **Gradient Boosting** | {ml_metrics.get('Gradient_Boosting', {}).get('test_accuracy', 'N/A')} | {ml_metrics.get('Gradient_Boosting', {}).get('test_roc_auc', 'N/A')} | {ml_metrics.get('Gradient_Boosting', {}).get('test_pr_auc', 'N/A')} | {ml_metrics.get('Gradient_Boosting', {}).get('test_recall_pos', 'N/A')} | {ml_metrics.get('Gradient_Boosting', {}).get('test_brier_score', 'N/A')} |
+
 - **Exported Artifact:** `models/escalation_model.pkl`
 
 ---
 
 ## 5. Member Behavioral Segmentation (Phase 6)
-- **Clustering Method:** K-Means ($k=4$) with `StandardScaler` on member-level behavioral attributes.
-- **Dimensionality Reduction:** PCA (2 components) explaining the primary variance dimensions.
+- **Clustering Methods:** K-Means ($k=4$) with `StandardScaler` & Hierarchical Agglomerative Clustering (Ward Linkage).
+- **Hierarchical Clustering Metrics:** Cophenetic Correlation = {segmentation_report.get('hierarchical_clustering', {}).get('cophenetic_correlation', 'N/A')} | Adjusted Rand Index vs K-Means = {segmentation_report.get('hierarchical_clustering', {}).get('adjusted_rand_index_vs_kmeans', 'N/A')}
+- **Dimensionality Reduction:** PCA (2 components) explaining {sum(segmentation_report.get('pca_explained_variance_ratio', [0, 0]))*100:.1f}% of total variance.
 - **Identified Behavioral Personas:**
 """
     persona_map = segmentation_report.get("persona_mapping", {})
@@ -135,14 +145,14 @@ def generate_pipeline_summary_report(
         md_content += f"  - **Cluster {cid} — {persona}:** Mean Age: {age:.1f} yrs | Digital Adoption: {dig:.1f}% | Avg Friction: {fric:.3f} | Escalation Rate: {esc:.1f}%\n"
 
     md_content += f"""
-- **Exported Artifact:** `models/kmeans_segmentation.pkl`
+- **Exported Artifacts:** `models/kmeans_segmentation.pkl`, `reports/figures/segmentation_clusters_pca.png`, `reports/figures/hierarchical_dendrogram.png`
 
 ---
 
 ## 6. Deep Learning vs. Traditional Sentiment Benchmark (Phase 7)
 - **Deep Learning Model:** PyTorch 1D-CNN with learned word embeddings (64-dim), batch normalization, adaptive pooling, and dropout.
 - **Baseline Model:** TF-IDF (1-2 grams) + Logistic Regression.
-- **Benchmark Evaluation:**
+- **Benchmark Evaluation (Trained on Realistic Noisy Text):**
   - **PyTorch 1D-CNN:** Accuracy: {sentiment_report['pytorch_1d_cnn']['accuracy']}, F1-Score: {sentiment_report['pytorch_1d_cnn']['f1_score']}, ROC-AUC: {sentiment_report['pytorch_1d_cnn']['roc_auc']}
   - **Baseline TF-IDF:** Accuracy: {sentiment_report['baseline_tfidf_logistic_regression']['accuracy']}, F1-Score: {sentiment_report['baseline_tfidf_logistic_regression']['f1_score']}, ROC-AUC: {sentiment_report['baseline_tfidf_logistic_regression']['roc_auc']}
 - **Exported Artifact:** `models/pytorch_sentiment_model.pt`
@@ -150,15 +160,20 @@ def generate_pipeline_summary_report(
 ---
 
 ## 7. NLP Topic Modeling & Complaint Classification (Phase 8)
-- **Algorithm:** Latent Dirichlet Allocation (LDA) with 5 Kaiser operational themes:
+- **Topic Modeling Algorithm:** Latent Dirichlet Allocation (LDA) with 5 Kaiser operational themes:
 """
     topics_dict = nlp_report.get("topics", {})
     for t_name, t_info in topics_dict.items():
         words = ", ".join(t_info.get("top_words", [])[:6])
         md_content += f"  - **{t_name}:** `{words}`\n"
 
+    complaint_eval = nlp_report.get("complaint_classification", {})
     md_content += f"""
-- **Exported Artifact:** `models/lda_topic_model.pkl`
+- **Supervised Complaint Classification:**
+  - **Overall Accuracy:** {complaint_eval.get('accuracy', 'N/A')}
+  - **Macro F1-Score:** {complaint_eval.get('f1_macro', 'N/A')}
+  - **Weighted F1-Score:** {complaint_eval.get('f1_weighted', 'N/A')}
+- **Exported Artifacts:** `models/lda_topic_model.pkl`, `models/complaint_classifier.pkl`, `reports/figures/complaint_classification_confusion_matrix.png`
 
 ---
 
@@ -249,6 +264,13 @@ def run_pipeline(force_generate_data: bool = False, run_eda_module: bool = True)
         nlp_report=nlp_report,
         execution_time=total_duration
     )
+
+    # Auto-synchronize the 6-page standalone dashboard HTML with latest database metrics
+    try:
+        from src.neon_dashboard_sync import sync_html_dashboard_with_neon
+        sync_html_dashboard_with_neon()
+    except Exception as e:
+        print(f"Note: Standalone dashboard sync skipped: {e}")
 
     print("\n" + "#"*80)
     print(f" KAISER PERMANENTE PIPELINE EXECUTION SUCCESSFULLY COMPLETED IN {total_duration:.2f}s")

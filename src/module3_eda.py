@@ -169,6 +169,125 @@ def generate_reason_resolution_plot(df: pd.DataFrame):
     print(f"  [TABLE SAVED] {table_path.name}")
 
 
+def generate_time_trends_plot(df: pd.DataFrame):
+    """
+    Generate chronological time trends: Monthly interaction volume and escalation rate.
+    Provides operational visibility into seasonal peaks and grievance surges.
+    """
+    df_time = df.copy()
+    if "Interaction_Date" in df_time.columns:
+        df_time["Date"] = pd.to_datetime(df_time["Interaction_Date"], errors="coerce")
+    else:
+        # Fallback date generation if not directly present
+        df_time["Date"] = pd.date_range(start="2024-01-01", periods=len(df_time), freq="h")
+
+    df_time["YearMonth"] = df_time["Date"].dt.to_period("M").astype(str)
+    
+    monthly = df_time.groupby("YearMonth").agg(
+        Total_Volume=("Interaction_ID", "count"),
+        Escalation_Rate=("Escalation_Flag", lambda x: np.mean(x) * 100.0),
+        FCR_Rate=("First_Contact_Resolution", lambda x: np.mean(x) * 100.0),
+        Mean_CSAT=("Satisfaction_Score", "mean"),
+        Mean_Duration=("Resolution_Time", "mean")
+    ).reset_index().sort_values("YearMonth")
+
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+
+    x = np.arange(len(monthly))
+    bars = ax1.bar(x, monthly["Total_Volume"], color="#005A9C", alpha=0.75, width=0.55, label="Monthly Volume", edgecolor="black")
+    ax1.set_xlabel("Operational Period (Year-Month)", fontsize=11, fontweight="bold", labelpad=10)
+    ax1.set_ylabel("Interaction Volume", fontsize=11, fontweight="bold", color="#003B71")
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(monthly["YearMonth"], rotation=35, ha="right", fontsize=9)
+    ax1.grid(True, linestyle="--", alpha=0.5)
+
+    ax2 = ax1.twinx()
+    line = ax2.plot(x, monthly["Escalation_Rate"], color="#B91C1C", linewidth=2.5, marker="o", markersize=6, label="Escalation Rate (%)")
+    ax2.set_ylabel("Escalation Rate (%)", fontsize=11, fontweight="bold", color="#B91C1C")
+    ax2.set_ylim(0, max(monthly["Escalation_Rate"].max() * 1.3, 35))
+    ax2.grid(False)
+
+    plt.title("Kaiser Permanente Longitudinal Operational Trends: Volume vs. Escalation Rate", fontsize=13, fontweight="bold", pad=14)
+
+    # Combined legend
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left", frameon=True)
+
+    plt.tight_layout()
+    output_path = FIGURES_DIR / "eda_time_trends.png"
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  [FIGURE SAVED] {output_path.name}")
+
+    summary_path = REPORTS_DIR / "eda_time_trends_summary.csv"
+    monthly.to_csv(summary_path, index=False)
+    print(f"  [TABLE SAVED] {summary_path.name}")
+
+
+def generate_outlier_plots(df: pd.DataFrame):
+    """
+    Generate multi-panel boxplots to identify operational outliers across
+    duration, total contacts, and age. Exports IQR statistical thresholds.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    target_cols = [
+        ("Resolution_Time", "Resolution Duration (min)", "#1f77b4"),
+        ("Total_Contacts", "Total Contacts (Count)", "#2ca02c"),
+        ("Age", "Member Age (Years)", "#ff7f0e")
+    ]
+
+    outlier_summary = []
+
+    for idx, (col, label, color) in enumerate(target_cols):
+        if col not in df.columns:
+            continue
+        
+        series = df[col].dropna()
+        q1 = series.quantile(0.25)
+        q3 = series.quantile(0.75)
+        iqr = q3 - q1
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
+        outliers = series[(series < lower_bound) | (series > upper_bound)]
+        outlier_pct = len(outliers) / len(series) * 100.0
+
+        outlier_summary.append({
+            "Metric": col,
+            "Q1_25Pct": round(float(q1), 2),
+            "Median": round(float(series.median()), 2),
+            "Q3_75Pct": round(float(q3), 2),
+            "IQR": round(float(iqr), 2),
+            "Lower_Fence": round(float(lower_bound), 2),
+            "Upper_Fence": round(float(upper_bound), 2),
+            "Outlier_Count": int(len(outliers)),
+            "Outlier_Pct": round(float(outlier_pct), 2)
+        })
+
+        sns.boxplot(
+            y=series, ax=axes[idx], color=color,
+            flierprops={"marker": "d", "markersize": 4, "markerfacecolor": "#d62728", "alpha": 0.6}
+        )
+        axes[idx].set_title(f"{label}\nOutliers: {len(outliers):,} ({outlier_pct:.1f}%)", fontsize=11, fontweight="bold")
+        axes[idx].set_ylabel(label, fontsize=10)
+        axes[idx].axhline(upper_bound, color="#d62728", linestyle="--", linewidth=1.2, label=f"Upper Fence: {upper_bound:.1f}")
+        axes[idx].legend(loc="upper right", fontsize=8)
+
+    plt.suptitle("Kaiser Permanente Operational Outlier Analysis (1.5 × IQR Fences)", fontsize=13, fontweight="bold", y=1.02)
+    plt.tight_layout()
+
+    output_path = FIGURES_DIR / "eda_outliers_boxplots.png"
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  [FIGURE SAVED] {output_path.name}")
+
+    outlier_df = pd.DataFrame(outlier_summary)
+    summary_path = REPORTS_DIR / "eda_outliers_summary.csv"
+    outlier_df.to_csv(summary_path, index=False)
+    print(f"  [TABLE SAVED] {summary_path.name}")
+
+
 def generate_summary_tables(df: pd.DataFrame) -> dict:
     """Compute and export comprehensive numerical descriptive statistics."""
     summary = df[["Resolution_Time", "Satisfaction_Score", "Total_Contacts", "Age"]].describe().T
@@ -190,6 +309,8 @@ def run_module3(df: pd.DataFrame):
     generate_correlation_matrix(df)
     generate_channel_breakdown_plot(df)
     generate_reason_resolution_plot(df)
+    generate_time_trends_plot(df)
+    generate_outlier_plots(df)
     summary_dict = generate_summary_tables(df)
     print("  [EDA COMPLETE] All analytical plots and tabular breakdowns successfully generated.")
     return summary_dict
